@@ -7,7 +7,8 @@ export const users = pgTable('users', {
   password: text('password').notNull(),
   isVerified: boolean('is_verified').default(false),
   token: text('token').notNull().unique(),
-  verificationToken: text('verification_token').notNull(),
+  verificationToken: text('verification_token'),
+  verificationTokenExpiry: timestamp(),
   createdAt: timestamp('created_at').defaultNow()
 });
 
