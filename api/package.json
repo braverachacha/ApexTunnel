@@ -1,19 +1,21 @@
 {
-  "name": "api",
+  "name": "apextunnelApi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "BraveraTech",
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.0",
     "drizzle-orm": "^0.45.2",
