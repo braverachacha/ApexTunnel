@@ -58,7 +58,7 @@ export const registerUser = async (req, res) =>{
     
     await sendVerificationEmail(email, verificationToken);
     
-    res.json({
+    res.status(201).json({
       message: 'Account created successfully. Check your email for account verification link.'
     });
     
