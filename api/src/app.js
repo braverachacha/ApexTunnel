@@ -15,10 +15,12 @@ import { authenticate } from './middleware/auth.js';
 
 import { authRouter } from './routes/auth.js';
 import { userRouter } from './routes/user.js';
+import { internalRouter } from './routes/internal.js';
 
 // Router mapping
 
 app.use('/auth', authRouter);
 app.use('/user', authenticate, userRouter);
+app.use('/internal', internalRouter);
 
 export { app };
