@@ -3,6 +3,7 @@ import crypto from 'crypto';
 
 import { db } from '../db/index.js';
 import { users } from '../db/schema.js';
+import { broadcast } from '../ws/index.js';
 
 export const tunnelConnected = async (req, res) => {
   try {
@@ -37,6 +38,14 @@ export const tunnelConnected = async (req, res) => {
     const domain = (user.isPremium && user.subdomain)
       ? user.subdomain
       : crypto.randomBytes(3).toString('hex');
+      
+      // live dashboard update
+      broadcast({
+      event: 'tunnel:connected',
+      subdomain: domain,
+      email: user.email,
+      isPremium: user.isPremium
+    });
 
     return res.status(200).json({
       subdomain: domain,
@@ -63,6 +72,12 @@ export const tunnelDisconnected = async (req, res) => {
     if (!subdomain) {
       return res.status(400).json({ message: 'Subdomain is required' });
     }
+    
+    // live dashboard update
+    broadcast({
+      event: 'tunnel:disconnected',
+      subdomain: subdomain
+    });
 
     return res.status(200).json({ message: 'Tunnel disconnected' });
 
