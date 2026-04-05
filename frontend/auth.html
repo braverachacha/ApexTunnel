@@ -4,12 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ApexTunnel — Sign In</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/auth.css">
 </head>
 <body>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle auth-theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <i class="fa-solid fa-moon"></i>
+    <i class="fa-solid fa-sun" style="display: none;"></i>
+  </button>
 
   <a href="index.html" class="back-link">
     <i class="fa-solid fa-arrow-left"></i> Back
@@ -91,6 +96,25 @@
             <span>Sign In</span>
             <i class="fa-solid fa-arrow-right"></i>
           </button>
+
+          <!-- Divider -->
+          <div class="auth-divider">
+            <span>or continue with</span>
+          </div>
+
+          <!-- OAuth Buttons (disabled) -->
+          <div class="oauth-buttons">
+            <button type="button" class="oauth-btn google-btn" disabled>
+              <i class="fa-brands fa-google"></i>
+              <span>Google</span>
+              <span class="coming-soon-badge">Soon</span>
+            </button>
+            <button type="button" class="oauth-btn github-btn" disabled>
+              <i class="fa-brands fa-github"></i>
+              <span>GitHub</span>
+              <span class="coming-soon-badge">Soon</span>
+            </button>
+          </div>
         </form>
 
         <!-- REGISTER FORM -->
@@ -116,6 +140,26 @@
             <span>Create Account</span>
             <i class="fa-solid fa-arrow-right"></i>
           </button>
+
+          <!-- Divider -->
+          <div class="auth-divider">
+            <span>or continue with</span>
+          </div>
+
+          <!-- OAuth Buttons (disabled) -->
+          <div class="oauth-buttons">
+            <button type="button" class="oauth-btn google-btn" disabled>
+              <i class="fa-brands fa-google"></i>
+              <span>Google</span>
+              <span class="coming-soon-badge">Soon</span>
+            </button>
+            <button type="button" class="oauth-btn github-btn" disabled>
+              <i class="fa-brands fa-github"></i>
+              <span>GitHub</span>
+              <span class="coming-soon-badge">Soon</span>
+            </button>
+          </div>
+
           <p class="form-note">
             <i class="fa-solid fa-shield-halved"></i>
             You'll receive a verification email before logging in.
@@ -126,6 +170,6 @@
     </div>
   </div>
 
-  <script src="scripts/auth.js"></script>
+  <script src="scripts/index.js"></script>
 </body>
 </html>
