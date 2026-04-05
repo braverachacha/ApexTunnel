@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApexTunnel — Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="./styles/css/main.css">
+  <style>
+    /* Admin specific overrides */
+    .admin-badge {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-left: 1rem;
+    }
+    
+    .stat-card.admin-stat {
+      cursor: pointer;
+    }
+    
+    /* User table */
+    .users-table-container {
+      overflow-x: auto;
+    }
+    
+    .users-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .users-table th,
+    .users-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 0.1rem solid var(--border);
+    }
+    
+    .users-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    
+    .user-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .user-action-btn {
+      background: var(--bg-soft);
+      border: 0.1rem solid var(--border);
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.6rem;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: var(--transition);
+    }
+    
+    .user-action-btn:hover {
+      background: var(--card);
+    }
+    
+    .user-action-btn.upgrade {
+      color: var(--accent);
+    }
+    
+    .user-action-btn.downgrade {
+      color: #f59e0b;
+    }
+    
+    .user-action-btn.suspend {
+      color: var(--danger);
+    }
+    
+    .user-action-btn.delete {
+      color: var(--danger);
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.8rem;
+      border-radius: 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    .status-badge.active {
+      background: var(--success);
+      color: white;
+    }
+    
+    .status-badge.suspended {
+      background: var(--danger);
+      color: white;
+    }
+    
+    /* Search bar */
+    .search-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .search-bar input {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      background: var(--bg);
+      border: 0.1rem solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+    }
+    
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    
+    /* Analytics cards */
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .chart-placeholder {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      min-height: 25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+    
+    .chart-placeholder i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    
+    /* Audit log */
+    .audit-log {
+      max-height: 30rem;
+      overflow-y: auto;
+    }
+    
+    .audit-entry {
+      padding: 0.8rem;
+      border-bottom: 0.1rem solid var(--border);
+      font-size: 1.2rem;
+      font-family: var(--font-mono);
+    }
+    
+    .audit-entry .time {
+      color: var(--text-muted);
+      margin-right: 1rem;
+    }
+    
+    .audit-entry .action {
+      color: var(--accent);
+    }
+    
+    /* Announcement */
+    .announcement-area {
+      margin-top: 1rem;
+    }
+    
+    .announcement-input {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .announcement-input textarea {
+      flex: 1;
+      padding: 0.8rem;
+      background: var(--bg);
+      border: 0.1rem solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      resize: vertical;
+      font-family: var(--font-body);
+    }
+    
+    .announcement-input button {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      border: none;
+      padding: 0 1.5rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .announcement-input button:hover {
+      transform: translateY(-0.2rem);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle dashboard-theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <i class="fa-solid fa-moon"></i>
+    <i class="fa-solid fa-sun" style="display: none;"></i>
+  </button>
+
+  <!-- Navbar -->
+  <nav class="dashboard-nav">
+    <div class="nav-container">
+      <a href="dashboard.html" class="nav-logo">Apex<span>Tunnel</span></a>
+      <div class="nav-actions">
+        <span class="admin-badge"><i class="fa-solid fa-shield-halved"></i> Admin</span>
+        <button class="logout-btn" id="logoutBtn">
+          <i class="fa-solid fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Container -->
+  <div class="dashboard-container">
+    
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-link active" data-section="overview">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Overview</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="users">
+          <i class="fa-solid fa-users"></i>
+          <span>User Management</span>
+          <span class="badge" id="userCount">0</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="tunnels">
+          <i class="fa-solid fa-diagram-project"></i>
+          <span>All Tunnels</span>
+          <span class="badge" id="adminTunnelCount">0</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="analytics">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Analytics</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="admin-actions">
+          <i class="fa-solid fa-gear"></i>
+          <span>Admin Actions</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      
+      <!-- OVERVIEW SECTION -->
+      <div id="overview-section" class="dashboard-section active">
+        <h1>Admin Dashboard</h1>
+        <p class="section-desc">System overview and monitoring</p>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card admin-stat">
+            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="adminTotalUsers">0</span>
+              <span class="stat-label">Total Users</span>
+            </div>
+          </div>
+          <div class="stat-card admin-stat">
+            <div class="stat-icon"><i class="fa-solid fa-diagram-project"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="adminTotalTunnels">0</span>
+              <span class="stat-label">Active Tunnels</span>
+            </div>
+          </div>
+          <div class="stat-card admin-stat">
+            <div class="stat-icon"><i class="fa-solid fa-chart-simple"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="adminTotalRequests">0</span>
+              <span class="stat-label">Total Requests</span>
+            </div>
+          </div>
+          <div class="stat-card admin-stat">
+            <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="adminUptime">99.9%</span>
+              <span class="stat-label">System Uptime</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card">
+          <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn-secondary" id="refreshDataBtn"><i class="fa-solid fa-rotate"></i> Refresh Data</button>
+            <button class="btn-secondary" id="exportLogsBtn"><i class="fa-solid fa-download"></i> Export Logs</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- USER MANAGEMENT SECTION -->
+      <div id="users-section" class="dashboard-section">
+        <h1>User Management</h1>
+        <p class="section-desc">Manage all registered users</p>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+          <input type="text" id="userSearch" placeholder="Search by email...">
+          <button class="btn-secondary" id="clearSearchBtn"><i class="fa-solid fa-times"></i> Clear</button>
+        </div>
+
+        <!-- Users Table -->
+        <div class="card">
+          <div class="users-table-container">
+            <table class="users-table">
+              <thead>
+                <tr><th>Email</th><th>Plan</th><th>Status</th><th>Created</th><th>Tunnels</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="usersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALL TUNNELS SECTION -->
+      <div id="tunnels-section" class="dashboard-section">
+        <h1>All Active Tunnels</h1>
+        <p class="section-desc">Monitor all tunnels across users</p>
+
+        <div class="tunnels-list" id="adminTunnelsList">
+          <div class="empty-state">
+            <i class="fa-solid fa-diagram-project"></i>
+            <p>No active tunnels</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYTICS SECTION -->
+      <div id="analytics-section" class="dashboard-section">
+        <h1>Analytics</h1>
+        <p class="section-desc">System usage statistics</p>
+
+        <div class="analytics-grid">
+          <div class="card">
+            <h3><i class="fa-solid fa-chart-line"></i> Requests Over Time</h3>
+            <div class="chart-placeholder">
+              <i class="fa-solid fa-chart-line"></i>
+              <p>Chart visualization placeholder</p>
+              <small>Daily requests: 1,247 | Weekly: 8,732 | Monthly: 34,189</small>
+            </div>
+          </div>
+          <div class="card">
+            <h3><i class="fa-solid fa-user-plus"></i> User Growth</h3>
+            <div class="chart-placeholder">
+              <i class="fa-solid fa-chart-line"></i>
+              <p>Chart visualization placeholder</p>
+              <small>New users this week: +47 | Total: 1,284</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="fa-solid fa-server"></i> Top Users by Traffic</h3>
+          <div class="users-table-container">
+            <table class="users-table">
+              <thead><tr><th>Email</th><th>Plan</th><th>Total Requests</th><th>Active Tunnels</th></tr></thead>
+              <tbody id="topUsersTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN ACTIONS SECTION -->
+      <div id="admin-actions-section" class="dashboard-section">
+        <h1>Admin Actions</h1>
+        <p class="section-desc">System administration tools</p>
+
+        <!-- Audit Logs -->
+        <div class="card">
+          <h3><i class="fa-solid fa-clock"></i> Audit Logs</h3>
+          <div class="audit-log" id="auditLog">
+            <div class="audit-entry"><span class="time">10:32:01</span> <span class="action">User upgraded</span> - john@example.com → Premium</div>
+            <div class="audit-entry"><span class="time">09:15:23</span> <span class="action">New user registered</span> - sarah@example.com</div>
+            <div class="audit-entry"><span class="time">08:45:12</span> <span class="action">Tunnel disconnected</span> - a3f2c1.apextunnel.online</div>
+            <div class="audit-entry"><span class="time">07:30:05</span> <span class="action">System backup completed</span></div>
+          </div>
+          <button class="btn-secondary" style="margin-top: 1rem;" id="refreshLogsBtn"><i class="fa-solid fa-rotate"></i> Refresh Logs</button>
+        </div>
+
+        <!-- Announcement Broadcast -->
+        <div class="card">
+          <h3><i class="fa-solid fa-bullhorn"></i> Announcement Broadcast</h3>
+          <p>Send a message to all users (will appear on their dashboard)</p>
+          <div class="announcement-area">
+            <div class="announcement-input">
+              <textarea id="announcementMsg" rows="3" placeholder="Enter announcement message..."></textarea>
+              <button id="broadcastBtn"><i class="fa-solid fa-paper-plane"></i> Broadcast</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Keys -->
+        <div class="card danger-zone">
+          <h3><i class="fa-solid fa-key"></i> System Keys</h3>
+          <p>Regenerate system-wide API keys. This will affect all users.</p>
+          <button class="danger-btn" id="regenerateSystemKeysBtn">
+            <i class="fa-solid fa-rotate"></i> Regenerate System Keys
+          </button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal" id="upgradeModal">
+    <div class="modal-content">
+      <span class="modal-close" id="upgradeModalClose">&times;</span>
+      <i class="fa-solid fa-crown modal-icon"></i>
+      <h3>Upgrade User Plan</h3>
+      <p id="upgradeModalUser">Upgrade this user to Premium?</p>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="cancelUpgrade">Cancel</button>
+        <button class="btn-primary" id="confirmUpgrade">Upgrade to Premium</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="suspendModal">
+    <div class="modal-content">
+      <span class="modal-close" id="suspendModalClose">&times;</span>
+      <i class="fa-solid fa-ban modal-icon"></i>
+      <h3>Suspend User Account</h3>
+      <p id="suspendModalUser">Suspend this user account?</p>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="cancelSuspend">Cancel</button>
+        <button class="btn-danger" id="confirmSuspend">Suspend Account</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="deleteModal">
+    <div class="modal-content">
+      <span class="modal-close" id="deleteModalClose">&times;</span>
+      <i class="fa-solid fa-trash modal-icon"></i>
+      <h3>Delete User Account</h3>
+      <p id="deleteModalUser">Permanently delete this user account? This cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="cancelDelete">Cancel</button>
+        <button class="btn-danger" id="confirmDelete">Delete Permanently</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="announceModal">
+    <div class="modal-content">
+      <i class="fa-solid fa-check-circle modal-icon" style="color: var(--success);"></i>
+      <h3>Announcement Sent</h3>
+      <p id="announceModalMsg">Your announcement has been broadcast to all users.</p>
+      <button class="btn-primary" id="announceModalClose">OK</button>
+    </div>
+  </div>
+
+  <script src="scripts/guard.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/admin.js"></script>
+</body>
+</html>

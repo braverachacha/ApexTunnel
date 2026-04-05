@@ -1,4 +1,5 @@
-// ===== APP.JS - Theme, Animations, Tab Switching, and Password Strength Meter =====
+// ===== APP.JS - Theme, Animations, Tab Switching, Password Strength =====
+// NO AUTH LOGIC - UI ONLY
 
 /* -----------------------------------
    THEME TOGGLE
@@ -144,15 +145,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 /* -----------------------------------
-   AUTH FORM TAB SWITCHING (UI only, no auth logic)
+   AUTH PAGE TAB SWITCHING (Login/Register - UI only)
 ----------------------------------- */
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
-const tabs = document.querySelectorAll('.tab');
+const authTabs = document.querySelectorAll('.auth-tabs .tab');
 
-function switchTab(tabName) {
+function switchAuthTab(tabName) {
   // Update tab buttons
-  tabs.forEach(tab => {
+  authTabs.forEach(tab => {
     if (tab.getAttribute('data-tab') === tabName) {
       tab.classList.add('active');
     } else {
@@ -172,13 +173,52 @@ function switchTab(tabName) {
   }
 }
 
-// Add click handlers to tabs
-if (tabs.length > 0) {
-  tabs.forEach(tab => {
+// Add click handlers to auth tabs
+if (authTabs.length > 0) {
+  authTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const tabName = tab.getAttribute('data-tab');
       if (tabName) {
-        switchTab(tabName);
+        switchAuthTab(tabName);
+      }
+    });
+  });
+}
+
+/* -----------------------------------
+   DASHBOARD SIDEBAR TAB SWITCHING (UI only)
+----------------------------------- */
+const sidebarLinks = document.querySelectorAll('.sidebar-link');
+const dashboardSections = document.querySelectorAll('.dashboard-section');
+
+function switchDashboardSection(sectionId) {
+  // Update sidebar links
+  sidebarLinks.forEach(link => {
+    if (link.getAttribute('data-section') === sectionId) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+  
+  // Show/hide sections
+  dashboardSections.forEach(section => {
+    if (section.id === `${sectionId}-section`) {
+      section.classList.add('active');
+    } else {
+      section.classList.remove('active');
+    }
+  });
+}
+
+// Add click handlers to dashboard sidebar links
+if (sidebarLinks.length > 0 && dashboardSections.length > 0) {
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sectionId = link.getAttribute('data-section');
+      if (sectionId) {
+        switchDashboardSection(sectionId);
       }
     });
   });

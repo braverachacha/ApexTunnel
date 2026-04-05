@@ -1,0 +1,25 @@
+// ─── FONTS ───
+$font-heading: 'Syne', sans-serif;
+$font-body: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
+
+// ─── COLORS ───
+$accent: oklch(0.65 0.18 260);
+$accent-2: oklch(0.7 0.15 200);
+$success: oklch(0.7 0.2 145);
+$danger: oklch(0.65 0.22 25);
+
+// ─── UI ───
+$radius: 1.4rem;
+$radius-sm: 1rem;
+$shadow: 0 1rem 3rem oklch(0 0 0 / 0.08);
+$transition: 0.25s ease;
+
+// ─── TERMINAL (always dark) ───
+$terminal-bg: oklch(0.08 0.02 260);
+$terminal-bar: oklch(0.12 0.02 260);
+$terminal-border: oklch(0.25 0.02 260);
+$terminal-muted: oklch(0.6 0.02 260);
+$terminal-text: oklch(0.9 0.01 260);
+$terminal-cyan: oklch(0.75 0.15 200);
+$terminal-green: oklch(0.75 0.2 145);
