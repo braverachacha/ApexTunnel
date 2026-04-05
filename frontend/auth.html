@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApexTunnel — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles/auth.css">
+</head>
+<body>
+
+  <a href="index.html" class="back-link">
+    <i class="fa-solid fa-arrow-left"></i> Back
+  </a>
+
+  <div class="auth-container">
+
+    <!-- Left panel -->
+    <div class="auth-left">
+      <div class="auth-brand">
+        <span class="brand-logo">Apex<em>Tunnel</em></span>
+        <p>Expose your localhost to the internet in seconds.</p>
+      </div>
+
+      <div class="auth-terminal">
+        <div class="terminal-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+        </div>
+        <div class="terminal-body">
+          <div><span class="t-muted">$</span> <span class="t-cyan">node</span> client.js --port 8000</div>
+          <div><span class="t-green">● online</span> <span class="t-muted">→</span> <span class="t-cyan">a3f2c1.apextunnel.online</span></div>
+        </div>
+      </div>
+
+      <div class="auth-features">
+        <div class="auth-feature">
+          <i class="fa-solid fa-bolt"></i>
+          <span>Instant tunnel setup</span>
+        </div>
+        <div class="auth-feature">
+          <i class="fa-solid fa-lock"></i>
+          <span>HTTPS by default</span>
+        </div>
+        <div class="auth-feature">
+          <i class="fa-solid fa-rotate"></i>
+          <span>Auto-reconnect</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right panel - form -->
+    <div class="auth-right">
+      <div class="auth-card">
+
+        <!-- Tabs -->
+        <div class="auth-tabs">
+          <button class="tab active" data-tab="login">
+            <i class="fa-solid fa-right-to-bracket"></i> Sign In
+          </button>
+          <button class="tab" data-tab="register">
+            <i class="fa-solid fa-user-plus"></i> Register
+          </button>
+        </div>
+
+        <!-- Alert -->
+        <div class="alert hidden" id="alert">
+          <i class="fa-solid fa-circle-info" id="alert-icon"></i>
+          <span id="alert-msg"></span>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="login-form" class="auth-form">
+          <div class="form-group">
+            <label><i class="fa-solid fa-envelope"></i> Email</label>
+            <input type="email" id="login-email" placeholder="you@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-lock"></i> Password</label>
+            <div class="input-wrap">
+              <input type="password" id="login-password" placeholder="••••••••" required>
+              <button type="button" class="toggle-pw" data-target="login-password">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit" id="login-btn">
+            <span>Sign In</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form id="register-form" class="auth-form hidden">
+          <div class="form-group">
+            <label><i class="fa-solid fa-envelope"></i> Email</label>
+            <input type="email" id="reg-email" placeholder="you@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-lock"></i> Password</label>
+            <div class="input-wrap">
+              <input type="password" id="reg-password" placeholder="Min 8 chars, letter + number" required>
+              <button type="button" class="toggle-pw" data-target="reg-password">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+            <div class="pw-strength hidden" id="pw-strength">
+              <div class="strength-bar" id="strength-bar"></div>
+              <span id="strength-label"></span>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit" id="reg-btn">
+            <span>Create Account</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <p class="form-note">
+            <i class="fa-solid fa-shield-halved"></i>
+            You'll receive a verification email before logging in.
+          </p>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/auth.js"></script>
+</body>
+</html>

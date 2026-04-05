@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ApexTunnel — Expose your localhost to the internet instantly. Self-hosted reverse tunneling with zero configuration.">
+  <meta name="keywords" content="tunneling, localhost, expose, reverse tunnel, ngrok alternative">
+  <meta name="author" content="BraveraTech">
+  <title>ApexTunnel — Expose Local Servers Instantly</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="nav-logo">Apex<span>Tunnel</span></a>
+      
+      <!-- Desktop nav links -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="auth.html">Login</a></li>
+      </ul>
+      
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+          <i class="fa-solid fa-sun" style="display: none;"></i>
+        </button>
+        <a href="auth.html" class="nav-cta">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      
+      <!-- Mobile hamburger -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      
+    </div>
+    
+    <!-- Mobile dropdown menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="auth.html">Login</a>
+      <a href="auth.html" class="mobile-cta">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <i class="fa-solid fa-circle-dot"></i> v1.0.0 — Now in beta
+    </div>
+
+    <h1>Expose local servers<br>to the <em>internet</em></h1>
+
+    <p>A self-hosted reverse tunnel. One command to make your localhost reachable from anywhere — no configuration, no cloud lock-in.</p>
+
+    <div class="hero-actions">
+      <a href="auth.html" class="btn-primary">
+        <i class="fa-solid fa-bolt"></i> Start tunneling
+      </a>
+      <a href="https://github.com/braverachacha/ExposureApp" class="btn-secondary" target="_blank">
+        <i class="fa-brands fa-github"></i> View on GitHub
+      </a>
+    </div>
+
+    <!-- Terminal demo -->
+    <div class="terminal-wrapper">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <span class="terminal-title">apextunnel — zsh</span>
+        </div>
+        <div class="terminal-body" id="terminalBody">
+          <div><span class="t-muted">$</span> <span class="t-cyan">APEX_CLIENT_TOKEN</span>=<span class="t-white your_token_demo">your_token</span> node client.js --port 8000</div>
+          <div>&nbsp;</div>
+          <div><span class="t-white">ApexTunnel v1.0.0</span></div>
+          <div><span class="t-muted">─────────────────────────────────────</span></div>
+          <div><span class="t-muted">Account    </span> <span class="t-white">you@gmail.com (Free)</span></div>
+          <div><span class="t-muted">Status     </span> <span class="t-green">● online</span></div>
+          <div><span class="t-muted">Forwarding </span> <span class="t-cyan">https://a3f2c1.apextunnel.online</span> <span class="t-muted">→ localhost:8000</span></div>
+          <div><span class="t-muted">─────────────────────────────────────</span></div>
+          <div>&nbsp;</div>
+          <div><span class="t-muted">Requests</span></div>
+          <div class="request-line"><span class="t-muted">10:32:01</span>  <span class="t-cyan">GET</span>   /api/health   <span class="t-green">200</span></div>
+          <div class="request-line"><span class="t-muted">10:32:04</span>  <span class="t-cyan">POST</span>  /auth/login   <span class="t-green">200</span></div>
+          <div class="request-line"><span class="t-muted">10:32:09</span>  <span class="t-cyan">GET</span>   /dashboard    <span class="t-green">200</span></div>
+          <div><span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-label reveal"><i class="fa-solid fa-list-ol"></i> How it works</div>
+    <h2 class="section-title reveal">Three steps.<br>Zero complexity.</h2>
+
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-icon"><i class="fa-solid fa-user-plus"></i></div>
+        <div class="step-num">01</div>
+        <h3>Register & get your token</h3>
+        <p>Create a free account. You'll receive a unique <code>APEX_CLIENT_TOKEN</code> for authentication.</p>
+        <button class="copy-token-demo" data-token="your_actual_token_here">Copy token example <i class="fa-regular fa-copy"></i></button>
+      </div>
+      <div class="step">
+        <div class="step-icon"><i class="fa-solid fa-terminal"></i></div>
+        <div class="step-num">02</div>
+        <h3>Run the client</h3>
+        <p>Download <code>client.js</code> and run it with your token and local port. The tunnel opens instantly.</p>
+        <div class="code-snippet">
+          <code>node client.js --token your_token --port 3000</code>
+          <button class="copy-btn"><i class="fa-regular fa-copy"></i></button>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-icon"><i class="fa-solid fa-share-nodes"></i></div>
+        <div class="step-num">03</div>
+        <h3>Share your URL</h3>
+        <p>Your local server is now live at <code>xxxxx.apextunnel.online</code>. Share it, test webhooks, demo to clients.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="section-label reveal"><i class="fa-solid fa-tag"></i> Pricing</div>
+    <h2 class="section-title reveal">Simple, honest pricing.</h2>
+
+    <div class="pricing reveal">
+      <div class="plan">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0 <span>/ forever</span></div>
+        <p class="plan-desc">Perfect for development, testing, and side projects.</p>
+        <ul class="plan-features">
+          <li><i class="fa-solid fa-check"></i> 1 active tunnel</li>
+          <li><i class="fa-solid fa-check"></i> Random subdomains</li>
+          <li><i class="fa-solid fa-check"></i> HTTP + HTTPS</li>
+          <li><i class="fa-solid fa-check"></i> Auto-reconnect</li>
+          <li class="muted"><i class="fa-solid fa-xmark"></i> Reserved subdomains</li>
+          <li class="muted"><i class="fa-solid fa-xmark"></i> Multiple tunnels</li>
+          <li class="muted"><i class="fa-solid fa-xmark"></i> Priority support</li>
+        </ul>
+        <a href="auth.html" class="plan-btn plan-btn-outline">Get started free</a>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-badge">Coming soon</div>
+        <div class="plan-name">Premium</div>
+        <div class="plan-price">$5 <span>/ month</span></div>
+        <p class="plan-desc">For teams and professionals who need reliability and custom domains.</p>
+        <ul class="plan-features">
+          <li><i class="fa-solid fa-check"></i> Unlimited tunnels</li>
+          <li><i class="fa-solid fa-check"></i> Reserved subdomains</li>
+          <li><i class="fa-solid fa-check"></i> HTTP + HTTPS</li>
+          <li><i class="fa-solid fa-check"></i> Auto-reconnect</li>
+          <li><i class="fa-solid fa-check"></i> Custom domains</li>
+          <li><i class="fa-solid fa-check"></i> Traffic dashboard</li>
+          <li><i class="fa-solid fa-check"></i> Priority support</li>
+        </ul>
+        <button class="plan-btn plan-btn-filled" id="waitlistBtn">Join waitlist <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist Modal -->
+  <div class="modal" id="waitlistModal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h3>Join the Premium Waitlist</h3>
+      <p>Be the first to know when Premium launches.</p>
+      <form id="waitlistForm">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Notify me <i class="fa-solid fa-bell"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2 class="reveal">Ready to expose<br>your <em>localhost</em>?</h2>
+    <p class="reveal">Free forever. No credit card. No lock-in.</p>
+    <a href="auth.html" class="btn-primary reveal">
+      <i class="fa-solid fa-rocket"></i> Create free account
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">ApexTunnel</div>
+    <p>Built by <a href="https://github.com/braverachacha">BraveraTech</a> · MIT License</p>
+    <div class="footer-links">
+      <a href="https://github.com/braverachacha/ExposureApp" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="auth.html"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a href="mailto:apextunnel.support@gmail.com"><i class="fa-solid fa-envelope"></i> Support</a>
+    </div>
+  </footer>
+
+  <script src="scripts/index.js"></script>
+</body>
+</html>
