@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm';
 import crypto from 'crypto';
+import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
 
 import { db } from '../db/index.js';
 import { users } from '../db/schema.js';
@@ -35,12 +36,11 @@ export const tunnelConnected = async (req, res) => {
     }
 
     // premium gets their saved subdomain, free gets random
-    const domain = (user.isPremium && user.subdomain)
-      ? user.subdomain
-      : crypto.randomBytes(3).toString('hex');
+    const domain = (user.isPremium && user.subdomain) ? user.subdomain : uniqueNamesGenerator({ dictionaries: [adjectives, animals], separator: '-', length: 2 
+      });
       
-      // live dashboard update
-      broadcast({
+    // live dashboard update
+    broadcast({
       event: 'tunnel:connected',
       subdomain: domain,
       email: user.email,

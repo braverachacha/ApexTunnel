@@ -70,13 +70,13 @@
         </div>
 
         <!-- Alert -->
-        <div class="alert hidden" id="alert">
+        <div class="alert" id="alert">
           <i class="fa-solid fa-circle-info" id="alert-icon"></i>
           <span id="alert-msg"></span>
         </div>
 
         <!-- LOGIN FORM -->
-        <form id="login-form" class="auth-form">
+        <div id="login-form" class="auth-form">
           <div class="form-group">
             <label><i class="fa-solid fa-envelope"></i> Email</label>
             <input type="email" id="login-email" placeholder="you@gmail.com" required>
@@ -113,18 +113,18 @@
               <span class="coming-soon-badge">Soon</span>
             </button>
           </div>
-        </form>
+        </div>
 
         <!-- REGISTER FORM -->
-        <form id="register-form" class="auth-form hidden">
+        <div id="register-form" class="auth-form hidden">
           <div class="form-group">
             <label><i class="fa-solid fa-envelope"></i> Email</label>
-            <input type="email" id="reg-email" placeholder="you@gmail.com" required>
+            <input type="email" id="reg-email" class="js-email" placeholder="you@gmail.com" required>
           </div>
           <div class="form-group">
             <label><i class="fa-solid fa-lock"></i> Password</label>
             <div class="input-wrap">
-              <input type="password" id="reg-password" placeholder="Min 8 chars, letter + number" required>
+              <input type="password" id="reg-password" class="js-password" placeholder="Min 8 chars, letter + number" required>
               <button type="button" class="toggle-pw" data-target="reg-password">
                 <i class="fa-solid fa-eye"></i>
               </button>
@@ -134,7 +134,7 @@
               <span id="strength-label"></span>
             </div>
           </div>
-          <button type="submit" class="btn-submit" id="reg-btn">
+          <button type="submit" class="btn-submit js-reg-button" id="reg-btn">
             <span>Create Account</span>
             <i class="fa-solid fa-arrow-right"></i>
           </button>
@@ -162,12 +162,13 @@
             <i class="fa-solid fa-shield-halved"></i>
             You'll receive a verification email before logging in.
           </p>
-        </form>
+        </div>
 
       </div>
     </div>
   </div>
 
   <script src="scripts/index.js"></script>
+  <script type="module" src="scripts/auth/auth.js"></script>
 </body>
 </html>

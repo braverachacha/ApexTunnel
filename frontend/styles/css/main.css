@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css");
 :root {
-  --font-heading: Syne, sans-serif;
+  --font-heading: Inter, -apple-system;
   --font-body: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   --font-mono: JetBrains Mono, monospace;
   --accent: oklch(65% 0.18 260deg);
@@ -314,6 +314,7 @@ nav {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 2rem;
+  margin-right: 1.5rem;
 }
 .nav-logo span {
   color: var(--accent);
@@ -502,7 +503,7 @@ nav {
 
 .section-label {
   font-family: var(--font-mono);
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: var(--accent);
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -513,7 +514,7 @@ nav {
 }
 
 .section-title {
-  font-size: clamp(2.8rem, 4.5vw, 4.8rem);
+  font-size: clamp(3.2rem, 4.5vw, 4.8rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   margin-bottom: 5rem;
@@ -657,8 +658,8 @@ nav {
 
 .plan-badge {
   position: absolute;
-  top: -1.2rem;
-  left: 3.2rem;
+  top: 1.2rem;
+  right: 3.2rem;
   font-family: var(--font-mono);
   font-size: 1.1rem;
   font-weight: 700;
@@ -947,7 +948,7 @@ footer {
 }
 
 .auth-brand .brand-logo {
-  font-family: "Syne", sans-serif;
+  font-family: "Inter", -apple-system;
   font-size: 2.8rem;
   font-weight: 700;
   display: block;
@@ -1441,7 +1442,7 @@ footer {
 }
 
 .stat-value {
-  font-family: "Syne", sans-serif;
+  font-family: "Inter", -apple-system;
   font-size: 2.8rem;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -2103,10 +2104,10 @@ input:checked + .toggle-slider::after {
 }
 @media (max-width: 480px) {
   .hero h1 {
-    font-size: 3.2rem;
+    font-size: 4.8rem;
   }
   .section-title {
-    font-size: 2.8rem;
+    font-size: 3rem;
   }
   .cta-section h2 {
     font-size: 3rem;
@@ -2119,12 +2120,6 @@ input:checked + .toggle-slider::after {
   }
   .plan {
     padding: 2.4rem;
-  }
-  .auth-tabs {
-    flex-direction: column;
-  }
-  .oauth-buttons {
-    grid-template-columns: 1fr;
   }
   .dashboard-main {
     padding: 1.6rem;

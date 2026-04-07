@@ -1,9 +1,6 @@
-// ===== APP.JS - Theme, Animations, Tab Switching, Password Strength =====
-// NO AUTH LOGIC - UI ONLY
-
-/* -----------------------------------
+/*
    THEME TOGGLE
------------------------------------ */
+ */
 const themeToggle = document.getElementById('themeToggle');
 const moonIcon = themeToggle?.querySelector('.fa-moon');
 const sunIcon = themeToggle?.querySelector('.fa-sun');
@@ -63,9 +60,9 @@ if (themeToggle) {
   });
 }
 
-/* -----------------------------------
+/* 
    SCROLL REVEAL ANIMATION (Landing Page)
------------------------------------ */
+*/
 const revealElements = document.querySelectorAll('.reveal');
 
 function checkReveal() {
@@ -85,9 +82,9 @@ if (revealElements.length > 0) {
   window.addEventListener('load', checkReveal);
 }
 
-/* -----------------------------------
+/*
    TERMINAL ANIMATION (Landing Page)
------------------------------------ */
+*/
 const terminalBody = document.getElementById('terminalBody');
 if (terminalBody && terminalBody.closest('.hero')) {
   const originalContent = terminalBody.innerHTML;
@@ -101,9 +98,9 @@ if (terminalBody && terminalBody.closest('.hero')) {
   }, 2000);
 }
 
-/* -----------------------------------
+/*
    MOBILE MENU TOGGLE (Landing Page)
------------------------------------ */
+*/
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 
@@ -131,9 +128,9 @@ if (mobileMenuBtn && mobileMenu) {
   });
 }
 
-/* -----------------------------------
+/*
    SMOOTH SCROLL (Landing Page)
------------------------------------ */
+*/
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const target = document.querySelector(this.getAttribute('href'));
@@ -144,9 +141,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-/* -----------------------------------
-   AUTH PAGE TAB SWITCHING (Login/Register - UI only)
------------------------------------ */
+/*
+   AUTH PAGE TAB SWITCHING (Login/Register)
+*/
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
 const authTabs = document.querySelectorAll('.auth-tabs .tab');
@@ -185,9 +182,9 @@ if (authTabs.length > 0) {
   });
 }
 
-/* -----------------------------------
-   DASHBOARD SIDEBAR TAB SWITCHING (UI only)
------------------------------------ */
+/*
+   DASHBOARD SIDEBAR TAB SWITCHING
+*/
 const sidebarLinks = document.querySelectorAll('.sidebar-link');
 const dashboardSections = document.querySelectorAll('.dashboard-section');
 
@@ -224,9 +221,9 @@ if (sidebarLinks.length > 0 && dashboardSections.length > 0) {
   });
 }
 
-/* -----------------------------------
-   PASSWORD VISIBILITY TOGGLE (UI only)
------------------------------------ */
+/*
+   PASSWORD VISIBILITY TOGGLE
+*/
 const toggleButtons = document.querySelectorAll('.toggle-pw');
 
 toggleButtons.forEach(btn => {
@@ -255,21 +252,21 @@ toggleButtons.forEach(btn => {
   });
 });
 
-/* -----------------------------------
+/*
    PASSWORD STRENGTH METER (Visual only, no submission)
------------------------------------ */
+*/
 const regPassword = document.getElementById('reg-password');
 const pwStrengthDiv = document.getElementById('pw-strength');
 const strengthLabel = document.getElementById('strength-label');
 
 function checkPasswordStrength(password) {
   let strength = 0;
-  
+
   if (password.length >= 8) strength++;
   if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
   if (password.match(/[0-9]/)) strength++;
   if (password.match(/[^a-zA-Z0-9]/)) strength++;
-  
+
   if (password.length === 0) {
     return { level: null, text: '' };
   } else if (strength <= 1) {
@@ -281,18 +278,32 @@ function checkPasswordStrength(password) {
   }
 }
 
+const strengthBar = document.getElementById('strength-bar');
+
+const strengthLevels = {
+  weak:   { width: '33%',  color: 'var(--danger)' },
+  medium: { width: '66%',  color: 'oklch(0.75 0.18 85)' },
+  strong: { width: '100%', color: 'var(--success)' }
+};
+
 if (regPassword && pwStrengthDiv) {
   regPassword.addEventListener('input', () => {
     const password = regPassword.value;
     const result = checkPasswordStrength(password);
-    
+
     if (result.level === null) {
       pwStrengthDiv.classList.add('hidden');
     } else {
       pwStrengthDiv.classList.remove('hidden');
-      pwStrengthDiv.setAttribute('data-strength', result.level);
+
+      if (strengthBar) {
+        strengthBar.style.setProperty('--width', strengthLevels[result.level].width);
+        strengthBar.style.setProperty('--color', strengthLevels[result.level].color);
+      }
+
       if (strengthLabel) {
         strengthLabel.textContent = result.text;
+        strengthLabel.style.color = strengthLevels[result.level].color;
       }
     }
   });
