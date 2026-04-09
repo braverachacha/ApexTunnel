@@ -23,4 +23,4 @@ app.use('/auth', authRouter);
 app.use('/user', authenticate, userRouter);
 app.use('/internal', internalRouter);
 
-export { app };
+export default app;
