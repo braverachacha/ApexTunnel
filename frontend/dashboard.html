@@ -4,11 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ApexTunnel — Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="styles/base.css">
-  <link rel="stylesheet" href="styles/dashboards.css">
+  <link rel="stylesheet" href="styles/css/main.css">
 </head>
 <body>
 
@@ -21,7 +18,7 @@
   <!-- Navbar -->
   <nav class="dashboard-nav">
     <div class="nav-container">
-      <a href="dashboard.html" class="nav-logo">Apex<span>Tunnel</span></a>
+      <a href="index.html" class="nav-logo">Apex<span>Tunnel</span></a>
       <div class="nav-actions">
         <span class="plan-badge" id="planBadge">Free</span>
         <button class="logout-btn" id="logoutBtn">
@@ -34,7 +31,7 @@
 
   <!-- Main Dashboard Container -->
   <div class="dashboard-container">
-    
+
     <!-- Sidebar -->
     <aside class="dashboard-sidebar">
       <nav class="sidebar-nav">
@@ -47,6 +44,10 @@
           <span>Active Tunnels</span>
           <span class="badge" id="tunnelCount">0</span>
         </a>
+        <a href="#" class="sidebar-link" data-section="subdomain">
+          <i class="fa-solid fa-globe"></i>
+          <span>Subdomain</span>
+        </a>
         <a href="#" class="sidebar-link" data-section="settings">
           <i class="fa-solid fa-gear"></i>
           <span>Settings</span>
@@ -56,7 +57,7 @@
 
     <!-- Main Content -->
     <main class="dashboard-main">
-      
+
       <!-- Overview Section -->
       <div id="overview-section" class="dashboard-section active">
         <h1>Dashboard</h1>
@@ -65,7 +66,7 @@
         <!-- Stats Cards -->
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-icon"><i class="fa-solid fa-tunnel"></i></div>
+            <div class="stat-icon"><i class="fa-solid fa-diagram-project"></i></div>
             <div class="stat-info">
               <span class="stat-value" id="activeTunnelsCount">0</span>
               <span class="stat-label">Active Tunnels</span>
@@ -124,9 +125,16 @@
         <!-- Quick Start Card -->
         <div class="card quick-start-card">
           <h3><i class="fa-solid fa-terminal"></i> Quick Start</h3>
-          <p>Run this command to start tunneling your local server:</p>
+          <p>Save your auth token once, then run to start tunneling:</p>
           <div class="code-snippet">
-            <code id="quickStartCommand">APEX_CLIENT_TOKEN=your_token node client.js --port 8000</code>
+            <code>node client.js authtoken <span id="quickStartToken">your_token</span></code>
+            <button class="copy-btn" id="copyTokenCmdBtn">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+          <p style="margin-top: 1rem;">Then start your tunnel:</p>
+          <div class="code-snippet">
+            <code id="quickStartCommand">node client.js --port 8000</code>
             <button class="copy-btn" id="copyCommandBtn">
               <i class="fa-regular fa-copy"></i>
             </button>
@@ -150,7 +158,7 @@
           <div class="empty-state" id="emptyTunnels">
             <i class="fa-solid fa-diagram-project"></i>
             <p>No active tunnels</p>
-            <span>Start a tunnel using the command above</span>
+            <span>Start a tunnel using the quick start command above</span>
           </div>
         </div>
 
@@ -190,6 +198,64 @@
             </div>
           </div>
         </template>
+      </div>
+
+      <!-- Subdomain Section -->
+      <div id="subdomain-section" class="dashboard-section">
+        <h1>Subdomain</h1>
+        <p class="section-desc">Register a custom subdomain for your tunnel.</p>
+
+        <!-- Current Subdomain -->
+        <div class="card subdomain-card">
+          <h3><i class="fa-solid fa-globe"></i> Current Subdomain</h3>
+          <div class="subdomain-display" id="currentSubdomainWrap">
+            <div class="subdomain-url" id="currentSubdomainUrl">
+              <i class="fa-solid fa-link"></i>
+              <code id="currentSubdomain">loading...</code>
+            </div>
+            <span class="subdomain-none hidden" id="noSubdomain">
+              <i class="fa-solid fa-circle-info"></i>
+              No subdomain registered yet.
+            </span>
+          </div>
+        </div>
+
+        <!-- Register Subdomain -->
+        <div class="card">
+          <h3><i class="fa-solid fa-pen-to-square"></i> Register Subdomain</h3>
+          <p class="section-desc" style="margin-bottom: 1.25rem;">
+            Choose a unique subdomain. It will be available at
+            <code>your-subdomain.apextunnel.online</code>
+          </p>
+
+          <div class="alert hidden" id="subdomain-alert">
+            <i class="fa-solid fa-circle-info" id="subdomain-alert-icon"></i>
+            <span id="subdomain-alert-msg"></span>
+          </div>
+
+          <div class="subdomain-form">
+            <div class="subdomain-input-wrap">
+              <input
+                type="text"
+                id="subdomainInput"
+                placeholder="my-app"
+                maxlength="32"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <span class="subdomain-suffix">.apextunnel.online</span>
+            </div>
+            <button class="btn-submit" id="registerSubdomainBtn">
+              <span>Register</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <p class="form-note" style="margin-top: 1rem;">
+            <i class="fa-solid fa-circle-info"></i>
+            Subdomains can only contain lowercase letters, numbers, and hyphens.
+          </p>
+        </div>
       </div>
 
       <!-- Settings Section -->
@@ -247,7 +313,6 @@
   </div>
 
   <script src="scripts/guard.js"></script>
-  <script src="scripts/domains.js"></script>
   <script src="scripts/index.js"></script>
   <script src="scripts/dashboard.js"></script>
 </body>

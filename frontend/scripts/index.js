@@ -308,3 +308,5 @@ if (regPassword && pwStrengthDiv) {
     }
   });
 }
+
+// verify steps

@@ -38,6 +38,9 @@ $sidebar-width: 24rem;
   border: 0.1rem solid color-mix(in oklch, var(--accent) 25%, transparent);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  position: absolute;
+  top: 2.5rem;
+  right: 50%;
 }
 
 .logout-btn {

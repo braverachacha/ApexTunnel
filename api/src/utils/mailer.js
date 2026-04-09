@@ -13,7 +13,7 @@ export const sendVerificationEmail = async (email, token)=>{
   
   try {
     
-    const link = `${process.env.FRONTEND_URL}/auth/verify?token=${token}`; // vite server
+    const link = `${process.env.FRONTEND_URL}/verify?token=${token}`; // vite server
   
     await transporter.sendMail({
       from: `"ApexTunnel" <${process.env.GMAIL_USER}>`,

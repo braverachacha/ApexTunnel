@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ApexTunnel — Account Verify</title>
+  <link rel="stylesheet" href="./styles/css/main.css">
+</head>
+<body>
+
+  <div class="verify-container">
+
+    <div class="brand">
+      <a href="index.html">Apex<em>Tunnel</em></a>
+    </div>
+    
+    <!-- ── Verifying (DEFAULT) ── -->
+    <div class="verify-card" id="verifying">
+
+      <div class="verify-loader">
+        <div class="spinner"></div>
+      </div>
+
+      <h1>Verifying your email</h1>
+      <p>Please wait while we confirm your account. This should only take a moment.</p>
+
+      <div class="verify-steps">
+        <p class="step active">Checking token <i class="fa-solid fa-spinner fa-spin"></i></p>
+        <p class="step">Validating request 
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        </p>
+        <p class="step">Completing verification
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ── Success ── -->
+    <div class="verify-card hidden" id="state-success">
+      <h1><i class="fa-solid fa-circle-check"></i> Email Verified</h1>
+      <p>Your account has been verified successfully. You can now sign in and start tunneling.</p>
+      <a href="auth.html" class="btn btn-cyan">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        Sign In
+      </a>
+    </div>
+
+    <!-- ── Expired ── -->
+    <div class="verify-card hidden" id="state-expired">
+      <div class="verify-icon verify-icon--yellow">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </div>
+      <h1>Link Expired</h1>
+      <p>Your verification link has expired. Verification links are valid for 30 minutes. Request a new one below.</p>
+      <div class="alert hidden" id="resend-alert">
+        <i class="fa-solid fa-circle-info"></i>
+        <span id="resend-alert-msg"></span>
+      </div>
+      <button class="btn btn-outline" id="resend-btn">
+        <i class="fa-solid fa-paper-plane"></i>
+        Resend Verification Email
+      </button>
+    </div>
+
+    <!-- ── Invalid ── -->
+    <div class="verify-card hidden" id="state-invalid">
+      <div class="verify-icon verify-icon--red">
+        <i class="fa-solid fa-link-slash"></i>
+      </div>
+      <h1>Invalid Link</h1>
+      <p>This verification link is invalid or has already been used. If you believe this is a mistake, please contact support.</p>
+      <a href="auth.html" class="btn btn-outline">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Sign In
+      </a>
+    </div>
+
+  </div>
+
+  <script src="scripts/index.js"></script>
+  <script type="module" src="scripts/auth/verify.js"></script>
+</body>
+</html>

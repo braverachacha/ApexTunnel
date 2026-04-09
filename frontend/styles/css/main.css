@@ -1044,7 +1044,7 @@ footer {
 }
 
 .alert {
-  display: flex;
+  /* display: none; */
   align-items: center;
   gap: 1rem;
   padding: 1.2rem 1.6rem;
@@ -1285,6 +1285,9 @@ footer {
   border: 0.1rem solid color-mix(in oklch, var(--accent) 25%, transparent);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  position: absolute;
+  top: 2.5rem;
+  right: 50%;
 }
 
 .logout-btn {
@@ -2130,6 +2133,165 @@ input:checked + .toggle-slider::after {
   .modal-content {
     padding: 2.4rem;
   }
+}
+.verify-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+}
+.verify-container .brand {
+  position: absolute;
+  top: 2.5rem;
+  left: 2rem;
+  font-size: 1.5rem;
+}
+.verify-container .brand a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+  font-family: "Inter", -apple-system;
+}
+.verify-container .brand a em {
+  color: oklch(70% 0.15 200deg);
+  font-style: normal;
+}
+.verify-container .verify-card {
+  width: 100%;
+  max-width: 480px;
+  background: oklch(18% 0.01 260deg);
+  border: 1px solid oklch(25% 0.02 260deg);
+  border-radius: 1.4rem;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 1rem 3rem oklch(0% 0 0deg / 0.08);
+}
+.verify-container .verify-card.hidden {
+  display: none;
+}
+.verify-container .verify-card h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: "Inter", -apple-system;
+}
+.verify-container .verify-card p {
+  font-size: 0.9rem;
+  color: oklch(65% 0.01 260deg);
+  line-height: 1.6;
+  max-width: 360px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+.verify-container .verify-loader {
+  margin-bottom: 0.5rem;
+}
+.verify-container .verify-loader .spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid oklch(25% 0.02 260deg);
+  border-top-color: oklch(70% 0.15 200deg);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.verify-container .verify-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+.verify-container .verify-steps .step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  color: oklch(55% 0.01 260deg);
+  background: oklch(22% 0.01 260deg);
+  border: 1px solid transparent;
+  font-family: "JetBrains Mono", monospace;
+  transition: all 0.25s ease;
+}
+.verify-container .verify-steps .step i {
+  opacity: 0;
+}
+.verify-container .verify-steps .step.active {
+  color: oklch(70% 0.15 200deg);
+  border-color: oklch(from oklch(70% 0.15 200deg) l c h/0.2);
+  background: oklch(from oklch(70% 0.15 200deg) l c h/0.05);
+}
+.verify-container .verify-steps .step.active i {
+  opacity: 1;
+}
+.verify-container .verify-steps .step.done {
+  color: oklch(70% 0.2 145deg);
+  border-color: oklch(from oklch(70% 0.2 145deg) l c h/0.2);
+  background: oklch(from oklch(70% 0.2 145deg) l c h/0.05);
+}
+.verify-container .verify-steps .step.done i {
+  opacity: 1;
+}
+.verify-container .verify-steps .step.done i::before {
+  content: "\f00c";
+}
+.verify-container .verify-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.verify-container .verify-icon--green {
+  background: oklch(from oklch(70% 0.2 145deg) l c h/0.1);
+  border: 1px solid oklch(from oklch(70% 0.2 145deg) l c h/0.3);
+  color: oklch(70% 0.2 145deg);
+}
+.verify-container .verify-icon--yellow {
+  background: oklch(75% 0.15 85deg / 0.1);
+  border: 1px solid oklch(75% 0.15 85deg / 0.3);
+  color: oklch(75% 0.15 85deg);
+}
+.verify-container .verify-icon--red {
+  background: oklch(from oklch(65% 0.22 25deg) l c h/0.1);
+  border: 1px solid oklch(from oklch(65% 0.22 25deg) l c h/0.3);
+  color: oklch(65% 0.22 25deg);
+}
+.verify-container .alert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  width: 100%;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+.verify-container .alert.hidden {
+  display: none;
+}
+.verify-container .alert.error {
+  background: oklch(from oklch(65% 0.22 25deg) l c h/0.1);
+  border: 1px solid oklch(from oklch(65% 0.22 25deg) l c h/0.3);
+  color: oklch(80% 0.15 25deg);
+}
+.verify-container .alert.info {
+  background: oklch(from oklch(70% 0.15 200deg) l c h/0.08);
+  border: 1px solid oklch(from oklch(70% 0.15 200deg) l c h/0.2);
+  color: oklch(70% 0.15 200deg);
 }
 
 /*# sourceMappingURL=main.css.map */
