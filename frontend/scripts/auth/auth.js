@@ -78,7 +78,7 @@ async function loginFunc() {
 
     showAlert(alertElement, 'Logged in successfully!', false);
 
-    window.location.href = '/dashboard';
+    window.location.href = '/dashboard.html';
 
   } catch (err) {
     console.error('Error:', err?.message || err);
