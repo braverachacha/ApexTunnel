@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <defs>
+    <!-- Gradient for the tunnel line -->
+    <linearGradient id="tunnelGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0"/>
+      <stop offset="40%" style="stop-color:#00d4ff;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0.3"/>
+    </linearGradient>
+
+    <!-- Glow filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Strong glow for dot -->
+    <filter id="dotGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Clip path for signal line -->
+    <clipPath id="lineClip">
+      <rect x="18" y="0" width="44" height="120"/>
+    </clipPath>
+  </defs>
+
+  <!-- ── Left node (server) ── -->
+  <g filter="url(#glow)">
+    <!-- Outer ring pulse -->
+    <circle cx="28" cy="60" r="14" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.3">
+      <animate attributeName="r" values="14;20;14" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Node circle -->
+    <circle cx="28" cy="60" r="10" fill="#0a0e17" stroke="#00d4ff" stroke-width="1.5"/>
+    <!-- Server icon inside -->
+    <rect x="23" y="55" width="10" height="3" rx="1" fill="#00d4ff" opacity="0.9"/>
+    <rect x="23" y="60" width="10" height="3" rx="1" fill="#00d4ff" opacity="0.6"/>
+    <circle cx="31" cy="56.5" r="0.8" fill="#0a0e17"/>
+    <circle cx="31" cy="61.5" r="0.8" fill="#0a0e17"/>
+  </g>
+
+  <!-- ── Tunnel line ── -->
+  <g clip-path="url(#lineClip)">
+    <!-- Static base line -->
+    <line x1="18" y1="60" x2="62" y2="60" stroke="#1e2d40" stroke-width="1.5"/>
+    <!-- Animated signal pulse -->
+    <line x1="18" y1="60" x2="62" y2="60"
+      stroke="url(#tunnelGrad)" stroke-width="2"
+      stroke-dasharray="20 60"
+      stroke-dashoffset="80">
+      <animate attributeName="stroke-dashoffset" values="80;-20" dur="1.2s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- ── Traveling dot ── -->
+  <circle cx="18" cy="60" r="2.5" fill="#00d4ff" filter="url(#dotGlow)">
+    <animate attributeName="cx" values="18;62;18" dur="1.2s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1"/>
+    <animate attributeName="opacity" values="1;1;0;0;1" dur="1.2s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- ── Right node (globe/cloud) ── -->
+  <g filter="url(#glow)">
+    <circle cx="72" cy="60" r="10" fill="#0a0e17" stroke="#00d4ff" stroke-width="1.5"/>
+    <!-- Globe lines -->
+    <circle cx="72" cy="60" r="6" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.8"/>
+    <line x1="66" y1="60" x2="78" y2="60" stroke="#00d4ff" stroke-width="0.8" opacity="0.6"/>
+    <path d="M72 54 Q75 60 72 66" fill="none" stroke="#00d4ff" stroke-width="0.8" opacity="0.6"/>
+    <path d="M72 54 Q69 60 72 66" fill="none" stroke="#00d4ff" stroke-width="0.8" opacity="0.6"/>
+  </g>
+
+  <!-- ── Wordmark ── -->
+  <!-- Apex -->
+  <text
+    x="92" y="68"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="32"
+    font-weight="800"
+    letter-spacing="-1"
+    fill="#e2e8f0">
+    Apex
+  </text>
+  <!-- Tunnel (accent color) -->
+  <text
+    x="172" y="68"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="32"
+    font-weight="800"
+    letter-spacing="-1"
+    fill="#00d4ff"
+    filter="url(#glow)">
+    Tunnel
+  </text>
+
+  <!-- ── Tagline ── -->
+  <text
+    x="92" y="84"
+    font-family="'JetBrains Mono', 'Courier New', monospace"
+    font-size="9"
+    letter-spacing="2"
+    fill="#64748b">
+    EXPOSE · CONNECT · TUNNEL
+  </text>
+
+  <!-- ── Beta badge ── -->
+  <rect x="322" y="46" width="36" height="14" rx="7" fill="rgba(0,212,255,0.1)" stroke="#00d4ff" stroke-width="0.8"/>
+  <text
+    x="340" y="57"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="7.5"
+    font-weight="700"
+    fill="#00d4ff"
+    text-anchor="middle"
+    letter-spacing="1">
+    BETA
+  </text>
+
+</svg>
