@@ -1,5 +1,5 @@
 import { createServer } from 'http';
-import { app } from './app.js';
+import app from './app.js';
 import { initWebSocket } from './ws/index.js';
 
 import 'dotenv/config';
@@ -12,5 +12,5 @@ initWebSocket(server);
 
 // app server
 server.listen(PORT, () => {
-  console.log(`Server running on: http://localhost:${PORT}`)
-})
+  console.log(`Server running on: http://localhost:${PORT}`);
+});
