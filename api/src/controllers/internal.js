@@ -58,7 +58,7 @@ export const tunnelConnected = async (req, res) => {
       
       */
     const domain = subdomain ? subdomain :  uniqueNamesGenerator({
-      dictionaries: [adjectives, animals], separator: '_',
+      dictionaries: [adjectives, animals], separator: '-',
       length: 2
     });
       
