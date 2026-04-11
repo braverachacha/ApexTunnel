@@ -1,0 +1,18 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="peakGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0062ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <path d="M100 40 L160 150 L40 150 Z" fill="none" stroke="url(#peakGradient)" stroke-width="10" stroke-linejoin="round" />
+  
+  <path d="M100 80 L130 150 M100 80 L70 150" fill="none" stroke="#2d3436" stroke-width="6" stroke-linecap="round" />
+  
+  <line x1="65" y1="130" x2="135" y2="130" stroke="#0062ff" stroke-width="4" stroke-dasharray="8,4">
+    <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1s" repeatCount="indefinite" />
+  </line>
+
+  <text x="100" y="185" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#2d3436" text-anchor="middle" letter-spacing="1">APEX TUNNEL</text>
+</svg>
