@@ -90,7 +90,11 @@ if (terminalBody && terminalBody.closest('.hero')) {
   const originalContent = terminalBody.innerHTML;
   
   // Reset terminal initially
-  terminalBody.innerHTML = '<div><span class="t-muted">$</span> <span class="t-cyan">APEX_CLIENT_TOKEN</span>=<span class="t-white">your_token</span> node client.js --port 8000</div><div>&nbsp;</div><div><span class="cursor"></span></div>';
+  terminalBody.innerHTML = `
+  <div>
+    <span class="t-muted">$</span> <span class="t-cyan">./apex.sh</span> --port 8000 --subdomain test</div><div>&nbsp;</div><div>
+    <span class="cursor"></span>
+  </div>`;
   
   // Animate after 2 seconds
   setTimeout(() => {
