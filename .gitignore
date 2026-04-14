@@ -1,6 +1,7 @@
 # Dependencies
 node_modules/
 api/node_modules/
+*.vite/
 
 # Build artifacts
 *.css.map
