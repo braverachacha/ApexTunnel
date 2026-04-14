@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="ApexTunnel — Expose your localhost to the internet instantly. Self-hosted reverse tunneling with zero configuration.">
   <meta name="keywords" content="tunneling, localhost, expose, reverse tunnel, ngrok alternative">
+  
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:title" content="ApexTunnel — Expose Local Servers Instantly">
+  <meta property="og:description" content="Self-hosted reverse tunneling with zero configuration. One command to make your localhost reachable.">
+  <meta property="og:image" content="https://apextunnel.top/assets/og-image.png">
+  <meta property="og:url" content="https://apextunnel.top">
+  <meta name="twitter:card" content="summary_large_image">
+  
   <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
   <meta name="author" content="BraveraTech">
   <title>ApexTunnel — Expose Local Servers Instantly</title>
-    <link rel="stylesheet" href="./styles/css/main.css">
+  <link rel="stylesheet" href="./styles/css/main.css">
 </head>
 <body>
 
@@ -51,7 +59,8 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-badge">
-      <i class="fa-solid fa-circle-dot"></i> v1.0.1 — Now in beta
+      <i class="fa-solid fa-circle-check"></i> v1.1.3 — Stable 
+      <a href="https://github.com/braverachacha/ExposureApp/releases" class="release-notes" target="_blank">What's new</a>
     </div>
 
     <h1>Expose local servers<br>to the <em>internet</em></h1>
@@ -77,9 +86,9 @@
           <span class="terminal-title">apextunnel — zsh</span>
         </div>
         <div class="terminal-body" id="terminalBody">
-          <div><span class="t-muted">$</span> <span class="t-cyan">./apex.sh</span> --port 8000 --subdomain test</div>
+          <div><span class="t-muted">$</span> <span class="t-cyan">apex</span> http 8000 --subdomain test</div>
           <div>&nbsp;</div>
-          <div><span class="t-white">ApexTunnel v1.0.1</span></div>
+          <div><span class="t-white">ApexTunnel v1.1.3</span></div>
           <div><span class="t-muted">─────────────────────────────────────</span></div>
           <div><span class="t-muted">Account    </span> <span class="t-white">you@gmail.com (Free)</span></div>
           <div><span class="t-muted">Status     </span> <span class="t-green">● online</span></div>
@@ -106,38 +115,40 @@
         <div class="step-icon"><i class="fa-solid fa-user-plus"></i></div>
         <div class="step-num">01</div>
         <h3>Register & get your token</h3>
-        <p>Create a free account. You'll receive a unique <code>token</code> for authentication </p>
-        <a href="auth.html" style="text-decoration: underline; color: lightblue;">here</a>
+        <p>Create a free account. Your dashboard will display a unique token — copy it with one click.</p>
+        <a href="auth.html" style="text-decoration: underline; color: lightblue;">Sign up here</a>
       </div>
       <div class="step">
-        <div class="step-icon"><i class="fa-solid fa-terminal"></i></div>
+        <div class="step-icon"><i class="fa-solid fa-download"></i></div>
         <div class="step-num">02</div>
-        <h3>Get client file</h3>
-        <p>Download/ clone <code>clientServer</code> from our official github page using this command</p>
+        <h3>Install the CLI</h3>
+        <p>Get the ApexTunnel client with a single command.</p>
         <div class="code-snippet">
-          <code>git clone https://github.com/braverachacha/ExposureApp.git</code>
+          <code>curl -sSL https://apextunnel.top/install.sh | bash</code>
           <button class="copy-btn"><i class="fa-regular fa-copy"></i></button>
         </div>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem;">macOS / Linux • <a href="https://github.com/braverachacha/ExposureApp/releases" target="_blank">Other platforms</a></p>
       </div>
       <div class="step">
-        <div class="step-icon"><i class="fa-solid fa-terminal"></i></div>
+        <div class="step-icon"><i class="fa-solid fa-key"></i></div>
         <div class="step-num">03</div>
-        <h3>Authentication</h3>
-        <p>Authenticate your client server using the example below. </p>
+        <h3>Authenticate</h3>
+        <p>Add your token to the CLI configuration.</p>
         <div class="code-snippet">
-          <code>./apex.sh authtoken  &lt;your-token&gt; </code>
+          <code>apex config add-authtoken &lt;your-token&gt;</code>
           <button class="copy-btn"><i class="fa-regular fa-copy"></i></button>
         </div>
       </div>
       <div class="step">
-        <div class="step-icon"><i class="fa-solid fa-terminal"></i></div>
+        <div class="step-icon"><i class="fa-solid fa-network-wired"></i></div>
         <div class="step-num">04</div>
-        <h3>Tunneling</h3>
-        <p>Tunnel your local apllication using the following command</p>
+        <h3>Start tunneling</h3>
+        <p>Expose your local server on any port.</p>
         <div class="code-snippet">
-          <code>./apex.sh --port  &lt;your-port eg 3000&gt;</code>
+          <code>apex http 3000</code>
           <button class="copy-btn"><i class="fa-regular fa-copy"></i></button>
         </div>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Use <code>--subdomain</code> to reserve a custom name (Free tier included).</p>
       </div>
       <div class="step">
         <div class="step-icon"><i class="fa-solid fa-share-nodes"></i></div>
@@ -160,11 +171,11 @@
         <p class="plan-desc">Perfect for development, testing, and side projects.</p>
         <ul class="plan-features">
           <li><i class="fa-solid fa-check"></i> 1 active tunnel</li>
-          <li><i class="fa-solid fa-check"></i> Random subdomains</li>
+          <li><i class="fa-solid fa-check"></i> 1 reserved subdomain</li>
           <li><i class="fa-solid fa-check"></i> HTTP + HTTPS</li>
           <li><i class="fa-solid fa-check"></i> Auto-reconnect</li>
-          <li class="muted"><i class="fa-solid fa-xmark"></i> Reserved subdomains</li>
-          <li class="muted"><i class="fa-solid fa-xmark"></i> Multiple tunnels</li>
+          <li class="muted"><i class="fa-solid fa-xmark"></i> Multiple reserved subdomains</li>
+          <li class="muted"><i class="fa-solid fa-xmark"></i> Custom domains</li>
           <li class="muted"><i class="fa-solid fa-xmark"></i> Priority support</li>
         </ul>
         <a href="auth.html" class="plan-btn plan-btn-outline">Get started free</a>
@@ -217,6 +228,7 @@
     <p>Built by <a href="https://github.com/braverachacha">BraveraTech</a> · MIT License</p>
     <div class="footer-links">
       <a href="https://github.com/braverachacha/ExposureApp" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="/docs"><i class="fa-solid fa-book"></i> Documentation</a>
       <a href="auth.html"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
       <a href="mailto:apextunnel.support@gmail.com"><i class="fa-solid fa-envelope"></i> Support</a>
     </div>

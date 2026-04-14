@@ -20,8 +20,9 @@
   <nav class="dashboard-nav">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">Apex<span>Tunnel</span></a>
+      <div class="nav-version">v1.1.3</div>
       <div class="nav-actions">
-        <span class="plan-badge" id="planBadge">Free</span>
+        <!-- <span class="plan-badge" id="planBadge">Free</span> -->
         <button class="logout-btn" id="logoutBtn">
           <i class="fa-solid fa-sign-out-alt"></i>
           <span>Logout</span>
@@ -111,10 +112,10 @@
               <span class="detail-label">API Token:</span>
               <div class="token-wrapper">
                 <code class="token-value" id="apiToken">••••••••••••••••</code>
-                <button class="copy-btn" id="copyTokenBtn" data-copy="apiToken">
+                <button class="copy-btn" id="copyTokenBtn" data-copy="apiToken" title="Copy token">
                   <i class="fa-regular fa-copy"></i>
                 </button>
-                <button class="regenerate-btn" id="regenerateTokenBtn">
+                <button class="regenerate-btn" id="regenerateTokenBtn" title="Regenerate token">
                   <i class="fa-solid fa-rotate"></i>
                   Regenerate
                 </button>
@@ -126,20 +127,24 @@
         <!-- Quick Start Card -->
         <div class="card quick-start-card">
           <h3><i class="fa-solid fa-terminal"></i> Quick Start</h3>
-          <p>Save your auth token once, then run to start tunneling:</p>
+          <p>Save your auth token once (it persists across sessions):</p>
           <div class="code-snippet">
-            <code>./apex.sh authtoken <span id="quickStartToken">your_token</span></code>
-            <button class="copy-btn" id="copyTokenCmdBtn">
+            <code>apex config add-authtoken <span id="quickStartToken">your_token</span></code>
+            <button class="copy-btn" id="copyTokenCmdBtn" title="Copy command">
               <i class="fa-regular fa-copy"></i>
             </button>
           </div>
           <p style="margin-top: 1rem;">Then start your tunnel:</p>
           <div class="code-snippet">
-            <code id="quickStartCommand">./apex.sh --port 8000</code>
-            <button class="copy-btn" id="copyCommandBtn">
+            <code id="quickStartCommand">apex http 8000</code>
+            <button class="copy-btn" id="copyCommandBtn" title="Copy command">
               <i class="fa-regular fa-copy"></i>
             </button>
           </div>
+          <p class="form-note" style="margin-top: 0.75rem;">
+            <i class="fa-solid fa-circle-info"></i>
+            Need a custom subdomain? Add <code>--subdomain yourname</code>
+          </p>
         </div>
       </div>
 
@@ -172,7 +177,7 @@
                 <span class="status-text">online</span>
               </div>
               <div class="tunnel-actions">
-                <button class="tunnel-action-btn" data-action="details">
+                <button class="tunnel-action-btn" data-action="details" title="Tunnel details">
                   <i class="fa-solid fa-info-circle"></i>
                 </button>
               </div>
@@ -181,6 +186,9 @@
               <div class="tunnel-url">
                 <i class="fa-solid fa-link"></i>
                 <code class="tunnel-domain"></code>
+                <button class="copy-btn small" data-copy="domain" title="Copy URL">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
               </div>
               <div class="tunnel-forward">
                 <i class="fa-solid fa-arrow-right"></i>
@@ -213,6 +221,9 @@
             <div class="subdomain-url" id="currentSubdomainUrl">
               <i class="fa-solid fa-link"></i>
               <code id="currentSubdomain">loading...</code>
+              <button class="copy-btn small" id="copySubdomainBtn" title="Copy URL">
+                <i class="fa-regular fa-copy"></i>
+              </button>
             </div>
             <span class="subdomain-none hidden" id="noSubdomain">
               <i class="fa-solid fa-circle-info"></i>
@@ -254,7 +265,7 @@
 
           <p class="form-note" style="margin-top: 1rem;">
             <i class="fa-solid fa-circle-info"></i>
-            Subdomains can only contain lowercase letters, numbers, and hyphens.
+            Only lowercase letters, numbers, and hyphens. Once registered, it's yours forever (even on free tier).
           </p>
         </div>
       </div>
@@ -315,6 +326,6 @@
 
   <script src="scripts/guard.js"></script>
   <script src="scripts/index.js"></script>
-  <script src="scripts/dashboard.js"></script>
+  <script src="scripts/auth/dashboard.js"></script> <!-- corrected path -->
 </body>
 </html>

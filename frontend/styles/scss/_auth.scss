@@ -41,6 +41,13 @@
   gap: 4.8rem;
 }
 
+.auth-version {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
 .auth-brand {
   .brand-logo {
     font-family: $font-heading;

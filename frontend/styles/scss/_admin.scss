@@ -1,4 +1,4 @@
-// ─── ADMIN BADGE ───
+// ─── ADMIN BADGE──────
 .admin-badge {
   background: linear-gradient(135deg, oklch(0.5 0.22 25), oklch(0.6 0.2 25));
   color: white;
@@ -12,7 +12,19 @@
   gap: 0.6rem;
 }
 
-// ─── ADMIN STAT CARD ───
+// ─── NAV VERSION BADGE
+.nav-version {
+  font-family: $font-mono;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  background: var(--bg-soft);
+  padding: 0.3rem 0.8rem;
+  border-radius: 10rem;
+  border: 0.1rem solid var(--border);
+  margin-left: 1rem;
+}
+
+// ─── ADMIN STAT CARD──
 .stat-card.admin-stat {
   cursor: pointer;
 
@@ -22,7 +34,7 @@
   }
 }
 
-// ─── QUICK ACTIONS ───
+// ─── QUICK ACTIONS────
 .quick-actions {
   display: flex;
   gap: 1rem;
@@ -30,7 +42,7 @@
   margin-top: 1.6rem;
 }
 
-// ─── SEARCH BAR ───
+// ─── SEARCH BAR───────
 .search-bar {
   display: flex;
   gap: 1rem;
@@ -55,7 +67,7 @@
   }
 }
 
-// ─── USERS TABLE ───
+// ─── USERS TABLE──────
 .users-table-container {
   overflow-x: auto;
 }
@@ -90,7 +102,7 @@
   }
 }
 
-// ─── USER ACTIONS ───
+// ─── USER ACTIONS─────
 .user-actions {
   display: flex;
   gap: 0.6rem;
@@ -133,7 +145,7 @@
   }
 }
 
-// ─── STATUS BADGE ───
+// ─── STATUS BADGE─────
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -157,7 +169,76 @@
   }
 }
 
-// ─── ANALYTICS ───
+// ─── PLAN TAG─────────
+.plan-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 1rem;
+  border-radius: 10rem;
+  font-family: $font-mono;
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  &.free {
+    background: color-mix(in oklch, var(--success) 15%, transparent);
+    color: var(--success);
+    border: 0.1rem solid color-mix(in oklch, var(--success) 30%, transparent);
+  }
+
+  &.premium {
+    background: color-mix(in oklch, var(--accent) 15%, transparent);
+    color: var(--accent);
+    border: 0.1rem solid color-mix(in oklch, var(--accent) 30%, transparent);
+  }
+}
+
+// ─── COMING SOON TAG──
+.coming-soon {
+  display: inline-block;
+  background: var(--bg-soft);
+  color: var(--text-muted);
+  font-family: $font-mono;
+  font-size: 1rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 10rem;
+  margin-left: 0.6rem;
+  border: 0.1rem solid var(--border);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// ─── EMPTY STATE──────
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  background: var(--bg-soft);
+  border-radius: var(--radius-sm);
+  border: 0.1rem dashed var(--border);
+
+  i {
+    font-size: 3.6rem;
+    margin-bottom: 1.2rem;
+    opacity: 0.6;
+  }
+
+  p {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+
+  span {
+    font-size: 1.3rem;
+    opacity: 0.8;
+  }
+}
+
+// ─── ANALYTICS────────
 .analytics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
@@ -195,7 +276,7 @@
   }
 }
 
-// ─── AUDIT LOG ───
+// ─── AUDIT LOG────────
 .audit-log {
   max-height: 30rem;
   overflow-y: auto;
@@ -239,7 +320,7 @@
   }
 }
 
-// ─── ANNOUNCEMENT ───
+// ─── ANNOUNCEMENT─────
 .announcement-area {
   margin-top: 1.6rem;
 }
@@ -292,7 +373,23 @@
   }
 }
 
-// ─── MODAL ICON VARIANTS ───
+// ─── MODAL CLOSE BUTTON ──────────────────────────────────────────────────────
+.modal-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.6rem;
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--transition);
+
+  &:hover {
+    color: var(--text);
+  }
+}
+
+// ─── MODAL ICON VARIANTS ─────────────────────────────────────────────────────
 .modal-icon {
   font-size: 3.6rem;
 
@@ -302,7 +399,22 @@
   &.fa-check-circle { color: var(--success); }
 }
 
-// ─── ADMIN RESPONSIVE ───
+// ─── SMALL COPY BUTTON VARIANT ───────────────────────────────────────────────
+.copy-btn.small {
+  padding: 0.2rem 0.6rem;
+  font-size: 1.1rem;
+  margin-left: 0.6rem;
+  background: transparent;
+  border: 0.1rem solid var(--border);
+  border-radius: 0.4rem;
+
+  &:hover {
+    background: var(--bg-soft);
+    border-color: var(--accent);
+  }
+}
+
+// ─── ADMIN RESPONSIVE─
 @media (max-width: 768px) {
   .analytics-grid { grid-template-columns: 1fr; }
   .search-bar { flex-direction: column; }

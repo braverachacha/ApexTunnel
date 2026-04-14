@@ -1,5 +1,15 @@
+# Dependencies
 node_modules/
-*.env
-*.vite/
-backupcss/
-admin.html
+api/node_modules/
+
+# Build artifacts
+*.css.map
+*.log
+
+# Environment files
+.env
+.env.local
+
+# OS junk
+.DS_Store
+Thumbs.db
