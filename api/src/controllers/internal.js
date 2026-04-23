@@ -30,7 +30,7 @@ export const tunnelConnected = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        message: `Not registered. Visit ${process.env.FRONTEND_URL}/register`
+        message: `Not registered. Visit ${process.env.FRONTEND_URL}/auth`
       });
     }
 
@@ -40,6 +40,8 @@ export const tunnelConnected = async (req, res) => {
         message: `You have not verified your email. Please check your email for verification link or visit ${process.env.FRONTEND_URL} for more info.`
       });
     }
+    
+    //free subdomains for now.
     
     /*
     if (!user.isPremium && subdomain) {

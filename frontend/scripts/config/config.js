@@ -6,3 +6,5 @@ export const setCookie = (name, value, days) =>{
     ${name}=${value}; path=/; max-age=${maxAge}; sameSite=Strict
     `;
 };
+
+export const VERSION = 'v1.1.4';

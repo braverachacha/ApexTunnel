@@ -1,3 +1,15 @@
+import { VERSION } from './config/config.js';
+
+// version tags
+
+const versionElements = document.querySelectorAll('.js-version');
+
+if (versionElements) {
+  versionElements.forEach(tag=>{
+    tag.innerHTML = VERSION;
+  });
+}
+
 /*
    THEME TOGGLE
  */
