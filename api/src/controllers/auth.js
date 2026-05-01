@@ -1,183 +1,178 @@
 import { eq } from 'drizzle-orm';
-import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 
 import { db } from '../db/index.js';
 import { users } from '../db/schema.js';
-import { sendVerificationEmail } from '../utils/mailer.js';
+import { sendOTPEmail } from '../utils/mailer.js';
 
-// Account registration
-export const registerUser = async (req, res) =>{
-  
+/**
+ * Generate a 6-digit OTP
+ */
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+/**
+ * Hash OTP for secure storage
+ */
+function hashOTP(otp) {
+  return crypto.createHash('sha256').update(otp).digest('hex');
+}
+
+/**
+ * STEP 1: Register with email and send OTP
+ * POST /auth/register
+ * Body: { email }
+ */
+export const registerUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-  
-    if (!email || !password) {
+    const { email } = req.body;
+
+    // Validate email
+    if (!email) {
       return res.status(400).json({
-        message: 'Email and password are required.'
+        message: 'Email is required.',
       });
     }
-      
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[\d!@#$%^&*])(?=.{8,})/;
-    if (!passwordRegex.test(password)) {
-      return res.status(400).json({
-        message: 'Password must be at least 8 characters and include at least one letter and one number or special character.'
-      });
-    }
-      
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.toLowerCase())) {
       return res.status(400).json({
-        message: 'Invalid email format.'
+        message: 'Invalid email format.',
       });
     }
-    
-    const existingUser = await db.select().from(users).where(eq(users.email, email.toLowerCase())).limit(1);
-    
+
+    // Check if email already exists
+    const existingUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email.toLowerCase()))
+      .limit(1);
+
     if (existingUser.length > 0) {
-      return res.status(409).json({
-        message: 'Email already registered.'
+      // Email exists, send OTP for login verification
+      const otp = generateOTP();
+      const otpHash = hashOTP(otp);
+      const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+      await db
+        .update(users)
+        .set({
+          otpHash: otpHash,
+          otpExpiry: otpExpiry,
+        })
+        .where(eq(users.email, email.toLowerCase()));
+
+      // Send OTP email
+      await sendOTPEmail(email, otp);
+
+      return res.status(200).json({
+        message: 'OTP sent to your email. It expires in 10 minutes.',
+        isExistingUser: true,
       });
     }
-    
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const token = crypto.randomBytes(32).toString('hex');
-    const verificationToken = crypto.randomBytes(32).toString('hex');
-    
-    // Add new user to db 
-    const [ newUser ] = await db.insert(users).values({
+
+    // New user: generate OTP and temporary account
+    const otp = generateOTP();
+    const otpHash = hashOTP(otp);
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    const apexToken = crypto.randomBytes(32).toString('hex');
+
+    // Create user account
+    await db.insert(users).values({
       email: email.toLowerCase(),
-      password: hashedPassword,
-      token: token,
-      verificationToken: verificationToken,
-      verificationTokenExpiry: new Date(Date.now() + 30 * 60 * 1000) // 30 min
-    }).returning();
-    
-    // send verification email
-    
-    await sendVerificationEmail(email, verificationToken);
-    
-    res.status(201).json({
-      message: 'Account created successfully. Check your email for account verification link.'
+      password: null,
+      isVerified: false,
+      token: apexToken,
+      otpHash: otpHash,
+      otpExpiry: otpExpiry,
     });
-    
-  } catch (err) {
-    console.error('Error:', err);
-    return res.status(500).json({
-      message: 'Internal error.'
-    });
-  }
-  
-};
 
-// Account verification
+    // Send OTP email
+    await sendOTPEmail(email, otp);
 
-export const  verifyEmail= async (req, res)=>{
-  
-  try {
-    
-    const { token } = req.body;
-    
-    if (!token) {
-      return res.status(400).json({
-        message: 'Missing verification token'
-      });
-    }
-    
-    const [ user ] = await db.select().from(users).where(eq(users.verificationToken, token)).limit(1);
-    
-    if (!user) {
-      return res.status(401).json({
-        message: 'Invalid verification link'
-      });
-    }
-    
-    // verification link expiry 
-    if ( new Date() > new Date(user.verificationTokenExpiry) ) {
-      return res.status(400).json({
-        message: 'Verification link has expired. please request fro a new one'
-      });
-    }
-     
-    await db.update(users).set({
-      isVerified: true,
-      verificationToken: null,
-      verificationTokenExpiry: null,
-    }).where(eq(users.id, user.id));
-  
-    res.status(200).json({
-      message: 'Account verified successfully'
+    return res.status(201).json({
+      message: 'Account created sucessfully. OTP sent to your email. It expires in 10 minutes.',
+      isExistingUser: false,
     });
-    
   } catch (err) {
-    console.error('Error:', err);
+    console.error('Error during registration:', err);
     return res.status(500).json({
-      message: 'An error occured during account verification. Please try again later.'
+      message: 'Internal error during registration.',
     });
   }
 };
 
-// Account login
-
-export const loginUser = async (req, res) => {
-  
+/**
+ * STEP 2: Verify OTP and complete authentication
+ * POST /auth/verify
+ * Body: { email, otp }
+ */
+export const verifyOTP = async (req, res) => {
   try {
-    
-    const { email, password } = req.body;
-    
-    if (!email || !password) {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
       return res.status(400).json({
-        message: 'Email and password are required.'
+        message: 'Email and OTP are required.',
       });
     }
-    
-    // user lookup
-    const [ user ] = await db.select().from(users).where(eq(users.email, email.toLowerCase())).limit(1);
-    
+
+    // Find user
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email.toLowerCase()))
+      .limit(1);
+
     if (!user) {
       return res.status(401).json({
-        message: 'Invalid email or password'
+        message: 'Invalid email or OTP.',
       });
     }
-    
-    // account verification check
-    if (!user.isVerified) {
-      return res.status(403).json({
-        message: 'Your account have not been verified. Check your email inbox for verification link'
-      });
-    }
-    
-    // Password check
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    
-    if (!passwordMatch) {
+
+    // Check OTP expiry
+    if (!user.otpExpiry || new Date() > new Date(user.otpExpiry)) {
       return res.status(400).json({
-        message: 'Invalid email or password'
+        message: 'OTP has expired. Request a new one.',
       });
     }
-    
-    // accessToken & refreshToken creation
-    
+
+    // Verify OTP
+    const otpHash = hashOTP(otp);
+    if (otpHash !== user.otpHash) {
+      return res.status(401).json({
+        message: 'Invalid email or OTP.',
+      });
+    }
+
+    // Mark account as verified and clear OTP
+    await db
+      .update(users)
+      .set({
+        isVerified: true,
+        otpHash: null,
+        otpExpiry: null,
+      })
+      .where(eq(users.id, user.id));
+
+    // Generate JWT access token
     const accessToken = jwt.sign(
-      {  id: user.id, email: user.email },
+      { id: user.id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
-    
-    // success
-    res.status(200).json({
-      message: 'Logged in successfully',
+
+    return res.status(200).json({
+      message: 'OTP verified successfully.',
       accessToken: accessToken,
-      apexToken: user.token
+      apexToken: user.token,
     });
-    
   } catch (err) {
-    console.error('Error:', err);
-    
+    console.error('Error during OTP verification:', err);
     return res.status(500).json({
-      message: 'An error occured. Please try again later.'
+      message: 'Internal error during verification.',
     });
   }
-  
 };
