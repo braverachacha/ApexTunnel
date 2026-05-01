@@ -2,7 +2,12 @@
 node_modules/
 api/node_modules/
 frontend/.vite/
+.nuxt/
+.output/
 .vite/
+dist/
+node_modules/
+
 
 # Build artifacts
 *.css.map
