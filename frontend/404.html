@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Maintenance Mode</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+}
+
+body{
+background:#0f172a;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+width:100%;
+background:#1e293b;
+padding:30px;
+border-radius:14px;
+box-shadow:0 15px 50px rgba(0,0,0,.6);
+text-align:center;
+}
+
+h1{
+font-size:55px;
+}
+
+.status{
+color:#facc15;
+margin-top:6px;
+}
+
+.section{
+margin-top:25px;
+line-height:1.6;
+}
+
+.buttons{
+margin-top:20px;
+}
+
+.btn{
+display:inline-block;
+margin:8px;
+padding:12px 26px;
+border-radius:30px;
+background:#22c55e;
+color:black;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.btn:hover{
+transform:scale(1.08);
+}
+
+canvas{
+background:#020617;
+border-radius:10px;
+margin-top:20px;
+width:100%;
+max-width:600px;
+}
+
+.scoreboard{
+margin-top:10px;
+font-size:16px;
+}
+
+.game-area{
+display:none;
+}
+
+.start-btn{
+background:#38bdf8;
+color:black;
+}
+
+footer{
+margin-top:20px;
+opacity:.6;
+font-size:13px;
+}
+
+@media(max-width:600px){
+
+h1{
+font-size:42px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>⚠ 404</h1>
+<p class="status">Server Under Maintenance</p>
+
+<div class="section">
+
+<p>
+Due to multiple user errors and high traffic, this route
+was temporarily placed into maintenance mode.
+</p>
+
+<p>
+You may return home or play a quick game while waiting.
+</p>
+
+</div>
+
+<div class="buttons">
+
+<a href="/home" class="btn">Go Home</a>
+<a href="/home" class="btn">Open Dashboard</a>
+
+<button class="btn start-btn" onclick="startGame()">
+Start Game
+</button>
+
+</div>
+
+<div class="game-area" id="gameArea">
+
+<canvas id="game" width="600" height="200"></canvas>
+
+<div class="scoreboard">
+Score: <span id="score">0</span> |
+Best: <span id="best">0</span>
+</div>
+
+<p style="opacity:.6;margin-top:6px">
+Press SPACE or TAP screen to jump
+</p>
+
+</div>
+
+<footer>
+
+Hostify System Maintenance Mode • Services Recovering
+
+</footer>
+
+</div>
+
+<script>
+
+const canvas = document.getElementById("game")
+const ctx = canvas.getContext("2d")
+
+let player = {x:50,y:150,w:20,h:20,vy:0}
+let gravity = 0.6
+
+let obstacle = {x:600,y:160,w:20,h:20}
+
+let score = 0
+let best = localStorage.getItem("bestScore") || 0
+
+document.getElementById("best").innerText = best
+
+let running = false
+
+function startGame(){
+
+document.getElementById("gameArea").style.display="block"
+
+if(!running){
+
+running=true
+requestAnimationFrame(loop)
+
+}
+
+}
+
+function loop(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+/* player */
+
+ctx.fillStyle="#22c55e"
+ctx.fillRect(player.x,player.y,player.w,player.h)
+
+/* obstacle */
+
+ctx.fillStyle="#ef4444"
+ctx.fillRect(obstacle.x,obstacle.y,obstacle.w,obstacle.h)
+
+/* physics */
+
+player.vy += gravity
+player.y += player.vy
+
+if(player.y>150){
+
+player.y=150
+player.vy=0
+
+}
+
+/* obstacle */
+
+obstacle.x -= 7
+
+if(obstacle.x < -20){
+
+obstacle.x = 600
+score++
+
+document.getElementById("score").innerText = score
+
+}
+
+/* collision */
+
+if(
+player.x < obstacle.x + obstacle.w &&
+player.x + player.w > obstacle.x &&
+player.y < obstacle.y + obstacle.h &&
+player.y + player.h > obstacle.y
+){
+
+gameOver()
+
+return
+
+}
+
+requestAnimationFrame(loop)
+
+}
+
+function gameOver(){
+
+if(score > best){
+
+best = score
+localStorage.setItem("bestScore",best)
+
+}
+
+document.getElementById("best").innerText = best
+
+alert("Game Over! Score: "+score)
+
+score=0
+obstacle.x=600
+
+document.getElementById("score").innerText=score
+
+running=false
+
+}
+
+/* jump */
+
+function jump(){
+
+if(player.y>=150){
+
+player.vy = -10
+
+}
+
+}
+
+document.addEventListener("keydown",e=>{
+if(e.code==="Space") jump()
+})
+
+document.addEventListener("click",jump)
+document.addEventListener("touchstart",jump)
+
+</script>
+
+</body>
+  </html>
