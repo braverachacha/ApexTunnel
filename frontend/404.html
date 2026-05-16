@@ -1,298 +1,205 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 | ApexTunnel</title>
+  <meta name="description" content="Page not found - ApexTunnel" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #13203d 0%, #08101f 45%, #02050c 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
 
-<title>Maintenance Mode</title>
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+      z-index: 0;
+    }
 
-<style>
+    .glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(0, 183, 255, 0.15);
+      filter: blur(120px);
+      border-radius: 50%;
+      top: -120px;
+      right: -100px;
+      z-index: 0;
+      animation: pulse 6s ease-in-out infinite;
+    }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
-}
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        transform: scale(1.15);
+        opacity: 1;
+      }
+    }
 
-body {
-  font-family: var(--font-body);
-  font-size: 1.6rem;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  transition: background var(--transition), color var(--transition);
-}
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      width: 92%;
+      text-align: center;
+      padding: 60px 40px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
 
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(0, 183, 255, 0.12);
+      border: 1px solid rgba(0, 183, 255, 0.25);
+      color: #7ddcff;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
 
-.container{
-max-width:900px;
-width:100%;
-background:#1e293b;
-padding:30px;
-border-radius:14px;
-box-shadow:0 15px 50px rgba(0,0,0,.6);
-text-align:center;
-}
+    .code {
+      font-size: clamp(90px, 16vw, 180px);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -8px;
+      background: linear-gradient(135deg, #ffffff 0%, #76d6ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
 
-h1{
-font-size:55px;
-}
+    h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
 
-.status{
-color:#facc15;
-margin-top:6px;
-}
+    p {
+      color: rgba(255,255,255,0.72);
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto 36px;
+    }
 
-.section{
-margin-top:25px;
-line-height:1.6;
-}
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
-.buttons{
-margin-top:20px;
-}
+    .btn {
+      text-decoration: none;
+      padding: 14px 26px;
+      border-radius: 14px;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.btn{
-display:inline-block;
-margin:8px;
-padding:12px 26px;
-border-radius:30px;
-background:#22c55e;
-color:black;
-text-decoration:none;
-font-weight:bold;
-transition:.3s;
-}
+    .btn-primary {
+      background: linear-gradient(135deg, #00b7ff 0%, #007bff 100%);
+      color: white;
+      box-shadow: 0 10px 30px rgba(0, 140, 255, 0.35);
+    }
 
-.btn:hover{
-transform:scale(1.08);
-}
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(0, 140, 255, 0.45);
+    }
 
-canvas{
-background:#020617;
-border-radius:10px;
-margin-top:20px;
-width:100%;
-max-width:600px;
-}
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
 
-.scoreboard{
-margin-top:10px;
-font-size:16px;
-}
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
 
-.game-area{
-display:none;
-}
+    .footer {
+      margin-top: 42px;
+      color: rgba(255,255,255,0.45);
+      font-size: 14px;
+    }
 
-.start-btn{
-background:#38bdf8;
-color:black;
-}
+    @media (max-width: 640px) {
+      .container {
+        padding: 42px 24px;
+      }
 
-footer{
-margin-top:20px;
-opacity:.6;
-font-size:13px;
-}
+      p {
+        font-size: 16px;
+      }
 
-@media(max-width:600px){
+      .actions {
+        flex-direction: column;
+      }
 
-h1{
-font-size:42px;
-}
-
-}
-
-</style>
-</head>
-
+      .btn {
+        width: 100%;
+      }
+    }
+  </style></head>
 <body>
+  <div class="grid"></div>
+  <div class="glow"></div>  <main class="container">
+    <div class="badge">
+      ⚡ ApexTunnel Secure Network
+    </div><div class="code">404</div>
 
-<div class="container">
-
-<h1>⚠ 404</h1>
-<p class="status">Server Under Maintenance</p>
-
-<div class="section">
-
-<p>
-Due to multiple user errors and high traffic, this route
-was temporarily placed into maintenance mode.
-</p>
+<h1>Connection Lost</h1>
 
 <p>
-You may return home or play a quick game while waiting.
+  The page you're trying to access could not be found.
+  It may have been moved, removed, or the tunnel endpoint no longer exists.
 </p>
 
+<div class="actions">
+  <a href="/" class="btn btn-primary">Return Home</a>
+  <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
 </div>
 
-<div class="buttons">
-
-<a href="/home" class="btn">Go Home</a>
-<a href="/home" class="btn">Open Dashboard</a>
-
-<button class="btn start-btn" onclick="startGame()">
-Start Game
-</button>
-
+<div class="footer">
+  © 2026 ApexTunnel.top • Fast • Secure • Reliable
 </div>
 
-<div class="game-area" id="gameArea">
-
-<canvas id="game" width="600" height="200"></canvas>
-
-<div class="scoreboard">
-Score: <span id="score">0</span> |
-Best: <span id="best">0</span>
-</div>
-
-<p style="opacity:.6;margin-top:6px">
-Press SPACE or TAP screen to jump
-</p>
-
-</div>
-
-<footer>
-
-Hostify System Maintenance Mode • Services Recovering
-
-</footer>
-
-</div>
-
-<script>
-
-const canvas = document.getElementById("game")
-const ctx = canvas.getContext("2d")
-
-let player = {x:50,y:150,w:20,h:20,vy:0}
-let gravity = 0.6
-
-let obstacle = {x:600,y:160,w:20,h:20}
-
-let score = 0
-let best = localStorage.getItem("bestScore") || 0
-
-document.getElementById("best").innerText = best
-
-let running = false
-
-function startGame(){
-
-document.getElementById("gameArea").style.display="block"
-
-if(!running){
-
-running=true
-requestAnimationFrame(loop)
-
-}
-
-}
-
-function loop(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-/* player */
-
-ctx.fillStyle="#22c55e"
-ctx.fillRect(player.x,player.y,player.w,player.h)
-
-/* obstacle */
-
-ctx.fillStyle="#ef4444"
-ctx.fillRect(obstacle.x,obstacle.y,obstacle.w,obstacle.h)
-
-/* physics */
-
-player.vy += gravity
-player.y += player.vy
-
-if(player.y>150){
-
-player.y=150
-player.vy=0
-
-}
-
-/* obstacle */
-
-obstacle.x -= 7
-
-if(obstacle.x < -20){
-
-obstacle.x = 600
-score++
-
-document.getElementById("score").innerText = score
-
-}
-
-/* collision */
-
-if(
-player.x < obstacle.x + obstacle.w &&
-player.x + player.w > obstacle.x &&
-player.y < obstacle.y + obstacle.h &&
-player.y + player.h > obstacle.y
-){
-
-gameOver()
-
-return
-
-}
-
-requestAnimationFrame(loop)
-
-}
-
-function gameOver(){
-
-if(score > best){
-
-best = score
-localStorage.setItem("bestScore",best)
-
-}
-
-document.getElementById("best").innerText = best
-
-alert("Game Over! Score: "+score)
-
-score=0
-obstacle.x=600
-
-document.getElementById("score").innerText=score
-
-running=false
-
-}
-
-/* jump */
-
-function jump(){
-
-if(player.y>=150){
-
-player.vy = -10
-
-}
-
-}
-
-document.addEventListener("keydown",e=>{
-if(e.code==="Space") jump()
-})
-
-document.addEventListener("click",jump)
-document.addEventListener("touchstart",jump)
-
-</script>
-
+  </main>
 </body>
-  </html>
+</html>
