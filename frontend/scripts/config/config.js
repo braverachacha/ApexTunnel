@@ -7,4 +7,4 @@ export const setCookie = (name, value, days) =>{
     `;
 };
 
-export const VERSION = 'v1.1.4';
+export const VERSION = 'v2.0.0';
