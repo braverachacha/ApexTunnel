@@ -11,7 +11,7 @@
 
 ---
 
-Frontend for [ApexTunnel](https://github.com/braverachacha/ExposureApp) — a self-hosted reverse tunnel. Vanilla JS, SCSS, no frameworks.
+Frontend for [ApexTunnel](https://github.com/braverachacha/ExposureApp) — a self-hosted reverse tunnel.
 
 ---
 
