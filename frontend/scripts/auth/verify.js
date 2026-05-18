@@ -7,7 +7,6 @@ const steps = document.querySelectorAll('.step');
 const resendBtn = document.querySelector('#resend-btn');
 const resendAlert = document.querySelector('#resend-alert');
 const resendAlertMsg = document.querySelector('#resend-alert-msg');
-
 const alertElement = document.querySelector('#alert-msg');
 
 let userEmail = '';
@@ -32,8 +31,7 @@ STATE SWITCH
 ━━━━━━━━━━━━━━━━━━━━━━
 */
 function showState(id) {
-  document
-    .querySelectorAll('.verify-card')
+  document.querySelectorAll('.verify-card')
     .forEach(card => card.classList.add('hidden'));
 
   const target = document.querySelector(`#${id}`);
@@ -42,32 +40,44 @@ function showState(id) {
 
 /*
 ━━━━━━━━━━━━━━━━━━━━━━
-VERIFY EMAIL + OTP FLOW
+INIT EMAIL + OTP FROM URL
+━━━━━━━━━━━━━━━━━━━━━━
+*/
+function getParams() {
+  const params = new URLSearchParams(window.location.search);
+
+  return {
+    email: params.get('email'),
+    otp: params.get('otp') || params.get('token')
+  };
+}
+
+/*
+━━━━━━━━━━━━━━━━━━━━━━
+VERIFY OTP (BACKEND MATCHED)
 ━━━━━━━━━━━━━━━━━━━━━━
 */
 async function verifyToken() {
-  const params = new URLSearchParams(window.location.search);
-
-  const email = params.get('email');
-  const otp = params.get('otp') || params.get('token');
+  const { email, otp } = getParams();
 
   userEmail = email;
 
   if (!email || !otp) {
     showState('state-invalid');
+    showAlert(alertElement, 'Invalid verification link', true);
     return;
   }
 
   try {
     setStep(0);
-    await sleep(400);
+    await sleep(300);
 
     setStep(1);
-    await sleep(400);
+    await sleep(300);
 
     setStep(2);
 
-    // ✅ FIX: backend expects email + otp
+    // ✅ MATCHES YOUR BACKEND EXACTLY
     await sendData(
       {
         email,
@@ -97,16 +107,7 @@ async function verifyToken() {
 
 /*
 ━━━━━━━━━━━━━━━━━━━━━━
-SLEEP HELPER
-━━━━━━━━━━━━━━━━━━━━━━
-*/
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/*
-━━━━━━━━━━━━━━━━━━━━━━
-RESEND CODE
+RESEND OTP
 ━━━━━━━━━━━━━━━━━━━━━━
 */
 if (resendBtn) {
@@ -114,28 +115,28 @@ if (resendBtn) {
 
     const email =
       userEmail ||
-      prompt('Enter your email address to resend the verification code:');
+      prompt('Enter your email address:');
 
     if (!email) return;
 
-    const originalContent = resendBtn.innerHTML;
+    const original = resendBtn.innerHTML;
 
     try {
+      resendBtn.disabled = true;
       resendBtn.innerHTML =
         '<i class="fa-solid fa-circle-notch fa-spin"></i> Sending...';
 
-      resendBtn.disabled = true;
-
+      // IMPORTANT: your backend sends OTP via register endpoint
       await sendData(
         { email },
-        `${API_URL}/auth/resend-verification`
+        `${API_URL}/auth/register`
       );
 
       if (resendAlert && resendAlertMsg) {
         resendAlert.classList.remove('hidden', 'error');
         resendAlert.classList.add('info');
         resendAlertMsg.textContent =
-          'Verification email sent. Check your inbox.';
+          'OTP sent successfully. Check your email.';
       }
 
     } catch (err) {
@@ -144,16 +145,23 @@ if (resendBtn) {
         resendAlert.classList.remove('hidden', 'info');
         resendAlert.classList.add('error');
         resendAlertMsg.textContent =
-          err.message || 'Failed to resend. Please try again.';
+          err.message || 'Failed to resend OTP.';
       }
 
     } finally {
-
-      resendBtn.innerHTML = originalContent;
+      resendBtn.innerHTML = original;
       resendBtn.disabled = false;
-
     }
   });
+}
+
+/*
+━━━━━━━━━━━━━━━━━━━━━━
+HELPER
+━━━━━━━━━━━━━━━━━━━━━━
+*/
+function sleep(ms) {
+  return new Promise(res => setTimeout(res, ms));
 }
 
 /*
