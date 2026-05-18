@@ -156,7 +156,6 @@
 
 // ─── ALERT ───
 .alert {
-  /* display: none; */
   align-items: center;
   gap: 1rem;
   padding: 1.2rem 1.6rem;
@@ -166,6 +165,11 @@
   margin-bottom: 2.4rem;
   border: 0.1rem solid;
   transition: var(--transition);
+  display: none;
+
+  &.show {
+    display: flex;
+  }
 
   &.success {
     background: color-mix(in oklch, var(--success) 10%, transparent);
@@ -221,9 +225,53 @@
   cursor: pointer;
   font-size: 1.4rem;
   padding: 0.4rem;
-  transition: color var(--transition);
 
   &:hover { color: var(--accent); }
+}
+
+// ─── OTP (NEW FIX) ───
+.otp-box {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.otp-input {
+  width: 100%;
+  aspect-ratio: 1/1;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: $font-mono;
+  border-radius: var(--radius-sm);
+  border: 0.1rem solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  outline: none;
+  transition: var(--transition);
+
+  &:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem color-mix(in oklch, var(--accent) 20%, transparent);
+  }
+}
+
+.otp-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+
+  button {
+    background: none;
+    border: none;
+    font-family: $font-mono;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    cursor: pointer;
+
+    &:hover { color: var(--accent); }
+  }
 }
 
 // ─── PASSWORD STRENGTH ───
@@ -259,10 +307,9 @@
   font-family: $font-mono;
   font-size: 1.1rem;
   color: var(--text-muted);
-  white-space: nowrap;
 }
 
-// ─── SUBMIT BUTTON ───
+// ─── BUTTON ───
 .btn-submit {
   font-family: $font-mono;
   font-size: 1.4rem;
@@ -274,11 +321,9 @@
   border-radius: var(--radius-sm);
   cursor: pointer;
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 1rem;
   transition: var(--transition);
-  margin-top: 0.4rem;
 
   &:hover {
     opacity: 0.88;
@@ -288,16 +333,6 @@
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    transform: none;
-  }
-
-  .spinner {
-    width: 1.6rem;
-    height: 1.6rem;
-    border: 0.2rem solid rgba(255, 255, 255, 0.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
   }
 }
 
@@ -320,11 +355,10 @@
     font-family: $font-mono;
     font-size: 1.2rem;
     color: var(--text-muted);
-    white-space: nowrap;
   }
 }
 
-// ─── OAUTH BUTTONS ───
+// ─── OAUTH ───
 .oauth-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -340,22 +374,15 @@
   border-radius: var(--radius-sm);
   color: var(--text-muted);
   cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
   opacity: 0.6;
-  position: relative;
 }
 
 .coming-soon-badge {
-  font-family: $font-mono;
   font-size: 1rem;
   background: color-mix(in oklch, var(--accent) 15%, transparent);
   color: var(--accent);
   padding: 0.2rem 0.6rem;
   border-radius: 0.4rem;
-  border: 0.1rem solid color-mix(in oklch, var(--accent) 25%, transparent);
 }
 
 .form-note {
@@ -363,10 +390,8 @@
   font-size: 1.2rem;
   color: var(--text-muted);
   display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  text-align: center;
   justify-content: center;
+  gap: 0.8rem;
 
   i { color: var(--accent); }
 }
