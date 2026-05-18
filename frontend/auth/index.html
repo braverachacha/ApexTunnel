@@ -1,177 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <link
+    rel="icon"
+    href="/favicon/favicon.svg"
+    type="image/svg+xml"
+  />
+
   <title>ApexTunnel — Sign In</title>
-  <link rel="stylesheet" href="/styles/scss/main.scss">
+
+  <link
+    rel="stylesheet"
+    href="/styles/scss/main.scss"
+  />
 </head>
+
 <body>
 
   <!-- Theme Toggle -->
-  <button class="theme-toggle auth-theme-toggle" id="themeToggle" aria-label="Toggle theme">
+  <button
+    class="theme-toggle auth-theme-toggle"
+    id="themeToggle"
+    aria-label="Toggle theme"
+    type="button"
+  >
+
     <i class="fa-solid fa-moon"></i>
+
     <i class="fa-solid fa-sun"></i>
+
   </button>
 
+  <!-- Back -->
   <a href="/home" class="back-link">
-    <i class="fa-solid fa-arrow-left"></i> Back
+
+    <i class="fa-solid fa-arrow-left"></i>
+
+    Back
+
   </a>
 
   <div class="auth-container">
 
-    <!-- Left panel -->
+    <!-- LEFT PANEL -->
     <div class="auth-left">
+
       <div class="auth-brand">
-        <span class="brand-logo">Apex<em>Tunnel</em></span>
-        <p>Expose your localhost to the internet in seconds.</p>
-        <p class="auth-version"><span class="js-version"></span> · stable</p>
+
+        <span class="brand-logo">
+          Apex<em>Tunnel</em>
+        </span>
+
+        <p>
+          Expose your localhost to the internet in seconds.
+        </p>
+
+        <p class="auth-version">
+
+          <span class="js-version"></span>
+
+          · stable
+
+        </p>
+
       </div>
 
+      <!-- Terminal -->
       <div class="auth-terminal">
+
         <div class="terminal-bar">
+
           <div class="dot dot-r"></div>
+
           <div class="dot dot-y"></div>
+
           <div class="dot dot-g"></div>
+
         </div>
+
         <div class="terminal-body">
-          <div><span class="t-muted">$</span> <span class="t-cyan">apex</span> http 3000 --subdomain api</div>
-          <div><span class="t-white">ApexTunnel <span class="js-version"></span></span></div>
-          <div><span class="t-green">● online</span> <span class="t-muted">→</span> <span class="t-cyan">api.apextunnel.top</span></div>
+
+          <div>
+
+            <span class="t-muted">$</span>
+
+            <span class="t-cyan">
+              apex
+            </span>
+
+            http 3000 --subdomain api
+
+          </div>
+
+          <div>
+
+            <span class="t-white">
+
+              ApexTunnel
+
+              <span class="js-version"></span>
+
+            </span>
+
+          </div>
+
+          <div>
+
+            <span class="t-green">
+              ● online
+            </span>
+
+            <span class="t-muted">
+              →
+            </span>
+
+            <span class="t-cyan">
+              api.apextunnel.top
+            </span>
+
+          </div>
+
         </div>
+
       </div>
 
+      <!-- Features -->
       <div class="auth-features">
+
         <div class="auth-feature">
+
           <i class="fa-solid fa-bolt"></i>
-          <span>Instant tunnel setup</span>
+
+          <span>
+            Instant tunnel setup
+          </span>
+
         </div>
+
         <div class="auth-feature">
+
           <i class="fa-solid fa-lock"></i>
-          <span>HTTPS by default</span>
+
+          <span>
+            HTTPS by default
+          </span>
+
         </div>
+
         <div class="auth-feature">
+
           <i class="fa-solid fa-rotate"></i>
-          <span>Auto-reconnect</span>
+
+          <span>
+            Auto-reconnect
+          </span>
+
         </div>
+
       </div>
+
     </div>
 
-    <!-- Right panel - form -->
+    <!-- RIGHT PANEL -->
     <div class="auth-right">
+
       <div class="auth-card">
 
         <!-- Tabs -->
-        <div class="auth-tabs">
-          <button class="tab active" data-tab="login">
-            <i class="fa-solid fa-right-to-bracket"></i> Sign In
+        <div class="auth-tabs" id="auth-tabs">
+
+          <button
+            type="button"
+            class="tab active"
+            data-tab="login"
+          >
+
+            <i class="fa-solid fa-right-to-bracket"></i>
+
+            Sign In
+
           </button>
-          <button class="tab" data-tab="register">
-            <i class="fa-solid fa-user-plus"></i> Register
+
+          <button
+            type="button"
+            class="tab"
+            data-tab="register"
+          >
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            Register
+
           </button>
+
         </div>
 
-        <!-- Alert -->
-        <div class="alert" id="alert">
-          <i class="fa-solid fa-circle-info" id="alert-icon"></i>
+        <!-- ALERT -->
+        <div class="alert hidden" id="alert">
+
+          <i
+            class="fa-solid fa-circle-info"
+            id="alert-icon"
+          ></i>
+
           <span id="alert-msg"></span>
+
         </div>
 
         <!-- LOGIN FORM -->
         <div id="login-form" class="auth-form">
+
           <div class="form-group">
-            <label><i class="fa-solid fa-envelope"></i> Email</label>
-            <input type="email" id="login-email" placeholder="you@gmail.com" required>
+
+            <label>
+
+              <i class="fa-solid fa-envelope"></i>
+
+              Email
+
+            </label>
+
+            <input
+              type="email"
+              id="login-email"
+              placeholder="you@gmail.com"
+              autocomplete="email"
+              required
+            />
+
           </div>
+
           <div class="form-group">
-            <label><i class="fa-solid fa-lock"></i> Password</label>
+
+            <label>
+
+              <i class="fa-solid fa-lock"></i>
+
+              Password
+
+            </label>
+
             <div class="input-wrap">
-              <input type="password" id="login-password" placeholder="••••••••" required>
-              <button type="button" class="toggle-pw" data-target="login-password">
+
+              <input
+                type="password"
+                id="login-password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required
+              />
+
+              <button
+                type="button"
+                class="toggle-pw"
+                data-target="login-password"
+              >
+
                 <i class="fa-solid fa-eye"></i>
+
               </button>
+
             </div>
+
           </div>
-          <button type="submit" class="btn-submit" id="login-btn">
+
+          <button
+            type="button"
+            class="btn-submit"
+            id="login-btn"
+          >
+
             <span>Sign In</span>
+
             <i class="fa-solid fa-arrow-right"></i>
+
           </button>
 
           <!-- Divider -->
           <div class="auth-divider">
-            <span>or continue with</span>
+
+            <span>
+              or continue with
+            </span>
+
           </div>
 
-          <!-- OAuth Buttons (disabled) -->
+          <!-- OAuth -->
           <div class="oauth-buttons">
-            <button type="button" class="oauth-btn google-btn" disabled>
+
+            <button
+              type="button"
+              class="oauth-btn google-btn"
+              disabled
+            >
+
               <i class="fa-brands fa-google"></i>
+
               <span>Google</span>
-              <span class="coming-soon-badge">Soon</span>
+
+              <span class="coming-soon-badge">
+                Soon
+              </span>
+
             </button>
-            <button type="button" class="oauth-btn github-btn" disabled>
+
+            <button
+              type="button"
+              class="oauth-btn github-btn"
+              disabled
+            >
+
               <i class="fa-brands fa-github"></i>
+
               <span>GitHub</span>
-              <span class="coming-soon-badge">Soon</span>
+
+              <span class="coming-soon-badge">
+                Soon
+              </span>
+
             </button>
+
           </div>
+
         </div>
 
         <!-- REGISTER FORM -->
-        <div id="register-form" class="auth-form hidden">
+        <div
+          id="register-form"
+          class="auth-form hidden"
+        >
+
           <div class="form-group">
-            <label><i class="fa-solid fa-envelope"></i> Email</label>
-            <input type="email" id="reg-email" class="js-email" placeholder="you@gmail.com" required>
+
+            <label>
+
+              <i class="fa-solid fa-envelope"></i>
+
+              Email
+
+            </label>
+
+            <input
+              type="email"
+              id="reg-email"
+              placeholder="you@gmail.com"
+              autocomplete="email"
+              required
+            />
+
           </div>
+
           <div class="form-group">
-            <label><i class="fa-solid fa-lock"></i> Password</label>
+
+            <label>
+
+              <i class="fa-solid fa-lock"></i>
+
+              Password
+
+            </label>
+
             <div class="input-wrap">
-              <input type="password" id="reg-password" class="js-password" placeholder="Min 8 chars, letter + number" required>
-              <button type="button" class="toggle-pw" data-target="reg-password">
+
+              <input
+                type="password"
+                id="reg-password"
+                placeholder="Min 8 chars"
+                autocomplete="new-password"
+                required
+              />
+
+              <button
+                type="button"
+                class="toggle-pw"
+                data-target="reg-password"
+              >
+
                 <i class="fa-solid fa-eye"></i>
+
               </button>
+
             </div>
-            <div class="pw-strength hidden" id="pw-strength">
-              <div class="strength-bar" id="strength-bar"></div>
+
+            <!-- Strength -->
+            <div
+              class="pw-strength hidden"
+              id="pw-strength"
+            >
+
+              <div
+                class="strength-bar"
+                id="strength-bar"
+              ></div>
+
               <span id="strength-label"></span>
+
             </div>
+
           </div>
-          <button type="submit" class="btn-submit js-reg-button" id="reg-btn">
+
+          <button
+            type="button"
+            class="btn-submit"
+            id="reg-btn"
+          >
+
             <span>Create Account</span>
+
             <i class="fa-solid fa-arrow-right"></i>
+
           </button>
 
           <!-- Divider -->
           <div class="auth-divider">
-            <span>or continue with</span>
+
+            <span>
+              or continue with
+            </span>
+
           </div>
 
-          <!-- OAuth Buttons (disabled) -->
+          <!-- OAuth -->
           <div class="oauth-buttons">
-            <button type="button" class="oauth-btn google-btn" disabled>
+
+            <button
+              type="button"
+              class="oauth-btn google-btn"
+              disabled
+            >
+
               <i class="fa-brands fa-google"></i>
+
               <span>Google</span>
-              <span class="coming-soon-badge">Soon</span>
+
+              <span class="coming-soon-badge">
+                Soon
+              </span>
+
             </button>
-            <button type="button" class="oauth-btn github-btn" disabled>
+
+            <button
+              type="button"
+              class="oauth-btn github-btn"
+              disabled
+            >
+
               <i class="fa-brands fa-github"></i>
+
               <span>GitHub</span>
-              <span class="coming-soon-badge">Soon</span>
+
+              <span class="coming-soon-badge">
+                Soon
+              </span>
+
             </button>
+
           </div>
 
           <p class="form-note">
+
             <i class="fa-solid fa-shield-halved"></i>
-            You'll receive a verification email before logging in.
+
+            We'll send a 6-digit verification code.
+
           </p>
+
+        </div>
+
+        <!-- VERIFY FORM -->
+        <div
+          id="verify-form"
+          class="auth-form hidden"
+        >
+
+          <div class="verify-header">
+
+            <div class="verify-icon">
+
+              <i class="fa-solid fa-envelope-open-text"></i>
+
+            </div>
+
+            <h2>
+              Verify Your Email
+            </h2>
+
+            <p id="verify-email-text">
+              Enter the 6-digit code sent to your email.
+            </p>
+
+          </div>
+
+          <!-- OTP -->
+          <div class="otp-container">
+
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              inputmode="numeric"
+            />
+
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              inputmode="numeric"
+            />
+
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              inputmode="numeric"
+            />
+
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              inputmode="numeric"
+            />
+
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              inputmode="numeric"
+            />
+
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              inputmode="numeric"
+            />
+
+          </div>
+
+          <button
+            type="button"
+            class="btn-submit"
+            id="verify-btn"
+          >
+
+            <span>Verify Account</span>
+
+            <i class="fa-solid fa-check"></i>
+
+          </button>
+
+          <!-- Footer -->
+          <div class="verify-footer">
+
+            <button
+              type="button"
+              class="resend-btn"
+              id="resend-code-btn"
+            >
+
+              Resend Code
+
+            </button>
+
+            <button
+              type="button"
+              class="change-email-btn"
+              id="change-email-btn"
+            >
+
+              Change Email
+
+            </button>
+
+          </div>
+
+          <p class="form-note">
+
+            <i class="fa-solid fa-clock"></i>
+
+            Code expires in 10 minutes.
+
+          </p>
+
         </div>
 
       </div>
+
     </div>
+
   </div>
 
-  <script type="module" src="/scripts/index.js"></script>
-  <script type="module" src="/scripts/auth/auth.js"></script>
+  <!-- Scripts -->
+  <script
+    type="module"
+    src="/scripts/index.js"
+  ></script>
+
+  <script
+    type="module"
+    src="/scripts/auth/auth.js"
+  ></script>
+
 </body>
 </html>
